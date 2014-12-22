@@ -3,6 +3,7 @@ package gui;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontMetrics;
+import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
 
 import fr.umlv.zen4.ApplicationContext;
@@ -81,45 +82,28 @@ public class Menu {
 			Font font = new Font("Helvetica Neue", Font.BOLD, 50);
 			graphics.setFont(font);
 			FontMetrics fm   = graphics.getFontMetrics(font);
-			
-			String string = "Save the Kittens";
-			Rectangle2D rect = fm.getStringBounds(string, graphics);
-			int textHeight = (int) (rect.getHeight()); 
-			int textWidth = (int) (rect.getWidth());
-			int areaHeight = (int) (4*kHeightEighth);
-			int areaWidth = (int) (3*kWidthFifth);
-			// Center title
-			int x = (int) (kWidthFifth + (areaWidth  - textWidth)  / 2);
-			int y = (int) ((areaHeight - textHeight) / 2) + fm.getAscent();
-			graphics.drawString(string, x, y);
-			
+
+			float areaHeight = 4*kHeightEighth;
+			float areaWidth = 3*kWidthFifth;
+			renderString(graphics, "SAVE THE KITTENS", fm, areaHeight, areaWidth, (int)kWidthFifth, 0);
 			
 			graphics.setColor(Color.WHITE);
-			areaHeight = (int) kHeightEighth;
-			areaWidth = (int) (3*kWidthFifth);
+			areaHeight = kHeightEighth;
+			areaWidth = 3*kWidthFifth;
 			
-			
-			string = "PLAY";
-			rect = fm.getStringBounds(string, graphics);
-			textHeight = (int) (rect.getHeight()); 
-			textWidth = (int) (rect.getWidth());
-			// Center PLAY
-			x = (int) (kWidthFifth + (areaWidth  - textWidth)  / 2);
-			y = (int) (4*kHeightEighth + ((areaHeight - textHeight) / 2) + fm.getAscent());
-			graphics.drawString(string, x, y);
-			
-			
-			string = "QUIT";
-			rect = fm.getStringBounds(string, graphics);
-			textHeight = (int) (rect.getHeight()); 
-			textWidth = (int) (rect.getWidth());
-			// Center QUIT
-			x = (int) (kWidthFifth + (areaWidth  - textWidth)  / 2);
-			y = (int) (6*kHeightEighth + ((areaHeight - textHeight) / 2) + fm.getAscent());
-			graphics.drawString(string, x, y);
-			
+			renderString(graphics, "PLAY", fm, areaHeight, areaWidth, (int)kWidthFifth, (int)(4*kHeightEighth));
+			renderString(graphics, "QUIT", fm, areaHeight, areaWidth, (int)kWidthFifth, (int)(6*kHeightEighth));
+	
 		});
 	}
 	
+	private void renderString(Graphics2D graphics, String string, FontMetrics fm, float areaHeight, float areaWidth, int x, int y) {
+		Rectangle2D rect = fm.getStringBounds(string, graphics);
+		int textHeight = (int) (rect.getHeight()); 
+		int textWidth = (int) (rect.getWidth());
+		x += (areaWidth  - textWidth)  / 2;
+		y += (areaHeight - textHeight) / 2 + fm.getAscent();
+		graphics.drawString(string, x, y);
+	}
 
 }
