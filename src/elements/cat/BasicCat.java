@@ -1,4 +1,4 @@
-package cat;
+package elements.cat;
 
 public class BasicCat implements Cat {
 	private int posX;

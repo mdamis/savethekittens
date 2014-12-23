@@ -1,4 +1,4 @@
-package item;
+package elements.item;
 
 public class Vortex implements Item {
 	private final int posX;
