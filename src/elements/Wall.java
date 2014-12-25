@@ -8,27 +8,27 @@ import org.jbox2d.dynamics.FixtureDef;
 import org.jbox2d.dynamics.World;
 
 public class Wall {
-	private static final float standardWidth = 1.0f;
-	private static final float standardHeight = 1.0f;
+	public static final float WIDTH = 1.0f; // standard width of a Wall
+	public static final float HEIGHT = 1.0f; // standard height of a Wall
 	private final Body body;
 	
 	private Wall(Body body) {
 		this.body = body;
 	}
 	
-	public static Wall createStandardWall(World world, float x, float y) {
+	public static Wall createWall(World world, float x, float y) {
 		BodyDef bodyDef = new BodyDef();
 		bodyDef.position.set(x, y);
 		bodyDef.type = BodyType.STATIC;
 		Body body = world.createBody(bodyDef);
-		createStandardWallFixtures(body);
+		createWallFixtures(body);
 		Wall wall = new Wall(body);
 		return wall;
 	}
 	
-	private static void createStandardWallFixtures(Body body) {
+	private static void createWallFixtures(Body body) {
 		PolygonShape shape = new PolygonShape();
-		shape.setAsBox(standardWidth, standardHeight);
+		shape.setAsBox(WIDTH, HEIGHT);
 		FixtureDef fixtureDef = new FixtureDef();
 		fixtureDef.shape = shape;
 		body.createFixture(fixtureDef);

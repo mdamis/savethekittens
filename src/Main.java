@@ -22,13 +22,15 @@ public class Main {
 			Menu menu = Menu.createMenu(width, height);
 			menu.render(context);
 			
-			Level level = new Level(20, 20);
+			Level level = new Level();
 			World world = level.getWorld();
-			Wall.createStandardWall(world, 1.0f, 1.0f);
-			Wall.createStandardWall(world, 1.0f, 3.0f);
+			level.createLevelBorders();
+			
 			for(Body body = world.getBodyList(); body != null; body = body.m_next) {
 				System.out.println(body.getPosition());
 			}
+			System.out.println(world.getBodyCount());
+		
 		});
 	}
 
