@@ -2,8 +2,6 @@ import java.awt.Color;
 
 import org.jbox2d.dynamics.Body;
 import org.jbox2d.dynamics.World;
-
-import elements.Wall;
 import elements.game.Level;
 import fr.umlv.zen4.Application;
 import fr.umlv.zen4.ScreenInfo;
@@ -30,7 +28,7 @@ public class Main {
 				System.out.println(body.getPosition());
 			}
 			System.out.println(world.getBodyCount());
-		
+			
 		});
 	}
 
