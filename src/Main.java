@@ -5,6 +5,7 @@ import org.jbox2d.dynamics.Body;
 import org.jbox2d.dynamics.World;
 
 import elements.Wall;
+import elements.cat.Cat;
 import elements.game.Level;
 import fr.umlv.zen4.Application;
 import fr.umlv.zen4.ScreenInfo;
@@ -27,17 +28,18 @@ public class Main {
 			Level level = new Level();
 			World world = level.getWorld();
 			level.createLevelBorders();
+			level.createLevelBasicCat(25.0f, 25.0f);
 			
 			for(Body body = world.getBodyList(); body != null; body = body.m_next) {
 				System.out.println(body.getPosition());
 			}
 			System.out.println(world.getBodyCount());
-			world.drawDebugData();
 			
 			GameUI gameUI = GameUI.createGameUI(width, height);
 
 			ArrayList<Wall> walls = level.getWalls();
-			gameUI.render(context, walls);
+			ArrayList<Cat> cats = level.getCats();
+			gameUI.render(context, cats, walls);
 		});
 	}
 

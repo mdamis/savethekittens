@@ -2,11 +2,13 @@ package gui;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 import elements.Wall;
+import elements.cat.Cat;
 import elements.game.Level;
 import fr.umlv.zen4.ApplicationContext;
 
@@ -42,7 +44,7 @@ public class GameUI {
 		return gameUI;
 	}
 	
-	public void render(ApplicationContext context, ArrayList<Wall> walls) {
+	public void render(ApplicationContext context, ArrayList<Cat> cats, ArrayList<Wall> walls) {
 		context.renderFrame((graphics, contentLost) -> {
 			if (contentLost) {
 				graphics.setColor(Color.BLACK);
@@ -51,7 +53,8 @@ public class GameUI {
 			
 			this.cleanScreen();
 			this.renderBackground();
-			this.renderWall(walls);
+			this.renderWalls(walls);
+			this.renderCats(cats);
 			graphics.drawImage(bufferedImage, null, 0, 0);
 		});
 	}
@@ -69,7 +72,22 @@ public class GameUI {
 		gui.fill(new Rectangle2D.Float(kWidthBorder, kHeightBorder, WIDTH, HEIGHT));
 	}
 	
-	private void renderWall(ArrayList<Wall> walls) {
+	private void renderCats(ArrayList<Cat> cats) {
+		for(Cat cat : cats) {
+			float x = cat.getBody().getPosition().x;
+			float y = cat.getBody().getPosition().y;
+			
+			gui.setColor(Color.MAGENTA);
+			gui.fill(new Ellipse2D.Float(
+					kWidthBorder + x * SCALE - SCALE,
+					height - kHeightBorder - y * SCALE - SCALE,
+					SCALE * 2,
+					SCALE * 2
+			));
+		}
+	}
+	
+	private void renderWalls(ArrayList<Wall> walls) {
 		for(Wall wall : walls) {
 			float x = wall.getBody().getPosition().x;
 			float y = wall.getBody().getPosition().y;

@@ -34,6 +34,7 @@ public class BasicCat implements Cat {
 		body.createFixture(fixtureDef);
 	}
 	
+	@Override
 	public Body getBody() {
 		return body;
 	}

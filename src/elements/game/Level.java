@@ -6,6 +6,7 @@ import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.World;
 
 import elements.Wall;
+import elements.cat.BasicCat;
 import elements.cat.Cat;
 
 public class Level {
@@ -35,6 +36,10 @@ public class Level {
 	
 	public ArrayList<Cat> getCats() {
 		return cats;
+	}
+	
+	public void createLevelBasicCat(float x, float y) {
+		cats.add(BasicCat.createBasicCat(world, x, y));
 	}
 	
 	public void createLevelBorders() {
