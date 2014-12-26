@@ -1,10 +1,14 @@
 import java.awt.Color;
+import java.util.ArrayList;
 
 import org.jbox2d.dynamics.Body;
 import org.jbox2d.dynamics.World;
+
+import elements.Wall;
 import elements.game.Level;
 import fr.umlv.zen4.Application;
 import fr.umlv.zen4.ScreenInfo;
+import gui.GameUI;
 import gui.Menu;
 
 public class Main {
@@ -28,7 +32,14 @@ public class Main {
 				System.out.println(body.getPosition());
 			}
 			System.out.println(world.getBodyCount());
+			world.drawDebugData();
 			
+			GameUI gameUI = GameUI.createGameUI(width, height);
+			gameUI.cleanScreen(context);
+			ArrayList<Wall> walls = level.getWalls();
+			for(Wall wall : walls) {
+				gameUI.renderWall(context, wall.getBody().getPosition().x, wall.getBody().getPosition().y);
+			}
 		});
 	}
 
