@@ -6,12 +6,15 @@ import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.World;
 
 import elements.Wall;
+import elements.cat.Cat;
 
 public class Level {
 	public static final float WIDTH = 50.0f; // standard width of a Level
 	public static final float HEIGHT = 50.0f; // standard height of a Level
+	
 	private final World world = new World(new Vec2()); // world with no gravity
 	private final ArrayList<Wall> walls = new ArrayList<>();
+	private final ArrayList<Cat> cats = new ArrayList<>();
 	
 	private static final int velocityIterations = 6;
 	private static final int positionIterations = 2;
@@ -28,6 +31,10 @@ public class Level {
 	
 	public ArrayList<Wall> getWalls() {
 		return walls;
+	}
+	
+	public ArrayList<Cat> getCats() {
+		return cats;
 	}
 	
 	public void createLevelBorders() {
