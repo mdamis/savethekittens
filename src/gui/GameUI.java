@@ -50,6 +50,7 @@ public class GameUI {
 			}
 			
 			this.cleanScreen();
+			this.renderBackground();
 			this.renderWall(walls);
 			graphics.drawImage(bufferedImage, null, 0, 0);
 		});
@@ -58,6 +59,14 @@ public class GameUI {
 	private void cleanScreen() {
 		gui.setColor(Color.BLACK);
 		gui.fill(new Rectangle2D.Float(0, 0, width, height));
+	}
+	
+	private void renderBackground() {
+		gui.setColor(Color.CYAN);
+		gui.fill(new Rectangle2D.Float(kWidthBorder, 0, WIDTH, height));
+		
+		gui.setColor(Color.WHITE);
+		gui.fill(new Rectangle2D.Float(kWidthBorder, kHeightBorder, WIDTH, HEIGHT));
 	}
 	
 	private void renderWall(ArrayList<Wall> walls) {
