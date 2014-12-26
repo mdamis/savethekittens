@@ -1,8 +1,12 @@
 package gui;
 
 import java.awt.Color;
+import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
+import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
+import elements.Wall;
 import elements.game.Level;
 import fr.umlv.zen4.ApplicationContext;
 
@@ -10,15 +14,21 @@ public class GameUI {
 	private static final int SCALE = 12; // pixel per meter
 	private static final int WIDTH = (int) (SCALE * Level.WIDTH);
 	private static final int HEIGHT = (int) (SCALE * Level.HEIGHT);
-	private final float width;
-	private final float height;
+	
 	private static float kWidthBorder;
 	private static float kHeightBorder;
 	private static float WALL_BORDER = 1;
 	
+	private final float width;
+	private final float height;
+	private final BufferedImage bufferedImage;
+	private final Graphics2D gui;
+	
 	private GameUI(float width, float height) {
 		this.width = width;
 		this.height = height;
+		this.bufferedImage = new BufferedImage((int)width, (int)height, BufferedImage.TYPE_INT_RGB);
+		this.gui = bufferedImage.createGraphics();
 	}
 	
 	private void initializeGameUIConstants() {
@@ -32,36 +42,44 @@ public class GameUI {
 		return gameUI;
 	}
 	
-	public void cleanScreen(ApplicationContext context) {
+	public void render(ApplicationContext context, ArrayList<Wall> walls) {
 		context.renderFrame((graphics, contentLost) -> {
-			graphics.setColor(Color.BLACK);
-			graphics.fill(new Rectangle2D.Float(0, 0, width, height));
-		});
-	}
-	
-	public void renderWall(ApplicationContext context, float x, float y) {
-		
-		context.renderFrame((graphics, contentLost) -> {
-			if(contentLost) {
+			if (contentLost) {
 				graphics.setColor(Color.BLACK);
 				graphics.fill(new Rectangle2D.Float(0, 0, width, height));
 			}
 			
-			graphics.setColor(Color.DARK_GRAY);
-			graphics.fill(new Rectangle2D.Float(
+			this.cleanScreen();
+			this.renderWall(walls);
+			graphics.drawImage(bufferedImage, null, 0, 0);
+		});
+	}
+	
+	private void cleanScreen() {
+		gui.setColor(Color.BLACK);
+		gui.fill(new Rectangle2D.Float(0, 0, width, height));
+	}
+	
+	private void renderWall(ArrayList<Wall> walls) {
+		for(Wall wall : walls) {
+			float x = wall.getBody().getPosition().x;
+			float y = wall.getBody().getPosition().y;
+				
+			gui.setColor(Color.DARK_GRAY);
+			gui.fill(new Rectangle2D.Float(
 					kWidthBorder + x * SCALE - SCALE,
 					height - kHeightBorder - y * SCALE - SCALE,
 					SCALE * 2,
 					SCALE * 2
 			));
-			
-			graphics.setColor(Color.LIGHT_GRAY);
-			graphics.fill(new Rectangle2D.Float(
+				
+			gui.setColor(Color.LIGHT_GRAY);
+			gui.fill(new Rectangle2D.Float(
 					kWidthBorder + x * SCALE - SCALE + WALL_BORDER,
 					height - kHeightBorder - y * SCALE - SCALE + WALL_BORDER,
 					(SCALE - WALL_BORDER) * 2,
 					(SCALE - WALL_BORDER) * 2
 			));
-		});
+		}
 	}
 }

@@ -35,11 +35,9 @@ public class Main {
 			world.drawDebugData();
 			
 			GameUI gameUI = GameUI.createGameUI(width, height);
-			gameUI.cleanScreen(context);
+
 			ArrayList<Wall> walls = level.getWalls();
-			for(Wall wall : walls) {
-				gameUI.renderWall(context, wall.getBody().getPosition().x, wall.getBody().getPosition().y);
-			}
+			gameUI.render(context, walls);
 		});
 	}
 
