@@ -1,5 +1,6 @@
 package elements.game;
 
+import elements.Net;
 import elements.Wall;
 import elements.cat.BasicCat;
 import elements.cat.Cat;
@@ -20,6 +21,7 @@ public class Level {
 	private final ApplicationContext context;
 	private final ArrayList<Wall> walls = new ArrayList<>();
 	private final ArrayList<Cat> cats = new ArrayList<>();
+	private final ArrayList<Net> nets = new ArrayList<>();
 	
 	private static final int velocityIterations = 6;
 	private static final int positionIterations = 2;
@@ -36,6 +38,7 @@ public class Level {
 		level.createLevelBorders();
 		level.createLevelBasicCat(25.0f, 25.0f);
 		level.createLevelBasicCat(12.0f, 32.0f);
+		level.createLevelNet(23.0f, 19.0f);
 		return level;
 	}
 	
@@ -59,6 +62,10 @@ public class Level {
 	
 	private void createLevelBasicCat(float x, float y) {
 		cats.add(BasicCat.createBasicCat(world, x, y));
+	}
+	
+	private void createLevelNet(float x, float y) {
+		nets.add(Net.createNet(world, x, y));
 	}
 	
 	private void createLevelBorders() {

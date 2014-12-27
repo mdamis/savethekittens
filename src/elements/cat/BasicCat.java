@@ -42,7 +42,7 @@ public class BasicCat implements Cat {
 	
 	@Override
 	public String toString() {
-		return body.getPosition().x + " " + body.getPosition().toString();
+		return "BasicCat : " + body.getPosition().x + " " + body.getPosition().toString();
 	}
 	
 }

@@ -7,26 +7,26 @@ import org.jbox2d.dynamics.BodyType;
 import org.jbox2d.dynamics.FixtureDef;
 import org.jbox2d.dynamics.World;
 
-public class Wall {
-	public static final float WIDTH = 1.0f; // standard width of a Wall
-	public static final float HEIGHT = 1.0f; // standard height of a Wall
+public class Net {
+	public static final float WIDTH = 1.5f; // standard width of a Net
+	public static final float HEIGHT = 1.5f; // standard height of a Net
 	private final Body body;
 	
-	private Wall(Body body) {
+	private Net(Body body) {
 		this.body = body;
 	}
 	
-	public static Wall createWall(World world, float x, float y) {
+	public static Net createNet(World world, float x, float y) {
 		BodyDef bodyDef = new BodyDef();
 		bodyDef.position.set(x, y);
 		bodyDef.type = BodyType.STATIC;
 		Body body = world.createBody(bodyDef);
-		createWallFixtures(body);
-		Wall wall = new Wall(body);
-		return wall;
+		createNetFixtures(body);
+		Net net = new Net(body);
+		return net;
 	}
 	
-	private static void createWallFixtures(Body body) {
+	private static void createNetFixtures(Body body) {
 		PolygonShape shape = new PolygonShape();
 		shape.setAsBox(WIDTH, HEIGHT);
 		FixtureDef fixtureDef = new FixtureDef();
@@ -40,7 +40,7 @@ public class Wall {
 	
 	@Override
 	public String toString() {
-		return "Wall : " + body.getPosition().x + " " + body.getPosition().toString();
+		return "Net : " + body.getPosition().x + " " + body.getPosition().toString();
 	}
 	
 }
