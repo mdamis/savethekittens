@@ -23,7 +23,6 @@ public class BasicCat implements Cat {
 		Body body = world.createBody(bodyDef);
 		createBasicCatFixtures(body);
 		BasicCat basicCat = new BasicCat(body);
-		body.setLinearVelocity(new Vec2(25.f, 25.f));
 		return basicCat;
 	}
 	
@@ -38,6 +37,16 @@ public class BasicCat implements Cat {
 	@Override
 	public Body getBody() {
 		return body;
+	}
+	
+	@Override
+	public void move(Vec2 v) {
+		body.setLinearVelocity(v);
+	}
+	
+	@Override
+	public void stop() {
+		body.setLinearVelocity(new Vec2(0, 0));
 	}
 	
 	@Override
