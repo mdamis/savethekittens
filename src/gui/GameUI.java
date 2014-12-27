@@ -9,14 +9,15 @@ import java.util.ArrayList;
 
 import elements.Net;
 import elements.Wall;
+import elements.barrel.Barrel;
 import elements.cat.Cat;
 import elements.game.Level;
 import fr.umlv.zen4.ApplicationContext;
 
 public class GameUI {
-	private static final int SCALE = 12; // pixel per meter
-	private static final int WIDTH = (int) (SCALE * Level.WIDTH);
-	private static final int HEIGHT = (int) (SCALE * Level.HEIGHT);
+	private static final float SCALE = 12.0f; // pixel per meter
+	private static final float WIDTH = SCALE * Level.WIDTH;
+	private static final float HEIGHT = SCALE * Level.HEIGHT;
 	private static final float WALL_BORDER = 1;
 	private static final Color BACKGROUND_COLOR = Color.WHITE;
 	
@@ -47,18 +48,19 @@ public class GameUI {
 	}
 	
 	public void render(ApplicationContext context, ArrayList<Cat> cats, 
-			ArrayList<Wall> walls, ArrayList<Net> nets) {
+			ArrayList<Wall> walls, ArrayList<Net> nets, ArrayList<Barrel> barrels) {
 		context.renderFrame((graphics, contentLost) -> {
 			if (contentLost) {
 				graphics.setColor(Color.BLACK);
 				graphics.fill(new Rectangle2D.Float(0, 0, width, height));
 			}
 			
-			this.cleanScreen();
-			this.renderBackground();
-			this.renderWalls(walls);
-			this.renderNets(nets);
-			this.renderCats(cats);
+			cleanScreen();
+			renderBackground();
+			renderWalls(walls);
+			renderNets(nets);
+			renderBarrels(barrels);
+			renderCats(cats);
 			graphics.drawImage(bufferedImage, null, 0, 0);
 		});
 	}
@@ -110,6 +112,21 @@ public class GameUI {
 					height - kHeightBorder - y * SCALE - SCALE + WALL_BORDER,
 					(SCALE - WALL_BORDER) * 2,
 					(SCALE - WALL_BORDER) * 2
+			));
+		}
+	}
+	
+	private void renderBarrels(ArrayList<Barrel> barrels) {
+		for(Barrel barrel : barrels) {
+			float x = barrel.getBody().getPosition().x;
+			float y = barrel.getBody().getPosition().y;
+				
+			gui.setColor(Color.GREEN);
+			gui.fill(new Rectangle2D.Float(
+					kWidthBorder + x * SCALE - SCALE * Barrel.WIDTH,
+					height - kHeightBorder - y * SCALE - SCALE * Barrel.HEIGHT,
+					SCALE * 2 * Barrel.WIDTH,
+					SCALE * 2 * Barrel.HEIGHT
 			));
 		}
 	}

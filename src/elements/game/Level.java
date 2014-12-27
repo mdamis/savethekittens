@@ -49,7 +49,7 @@ public class Level {
 	public void update() {
 		world.step(timeStep, velocityIterations, positionIterations);
 		world.clearForces();
-		this.gameUI.render(context, cats, walls, nets);
+		this.gameUI.render(context, cats, walls, nets, barrels);
 	}
 
 	public World getWorld() {
