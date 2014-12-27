@@ -7,6 +7,7 @@ import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
+import elements.Net;
 import elements.Wall;
 import elements.cat.Cat;
 import elements.game.Level;
@@ -16,10 +17,11 @@ public class GameUI {
 	private static final int SCALE = 12; // pixel per meter
 	private static final int WIDTH = (int) (SCALE * Level.WIDTH);
 	private static final int HEIGHT = (int) (SCALE * Level.HEIGHT);
+	private static final float WALL_BORDER = 1;
+	private static final Color BACKGROUND_COLOR = Color.WHITE;
 	
 	private static float kWidthBorder;
 	private static float kHeightBorder;
-	private static float WALL_BORDER = 1;
 	
 	private final float width;
 	private final float height;
@@ -44,7 +46,8 @@ public class GameUI {
 		return gameUI;
 	}
 	
-	public void render(ApplicationContext context, ArrayList<Cat> cats, ArrayList<Wall> walls) {
+	public void render(ApplicationContext context, ArrayList<Cat> cats, 
+			ArrayList<Wall> walls, ArrayList<Net> nets) {
 		context.renderFrame((graphics, contentLost) -> {
 			if (contentLost) {
 				graphics.setColor(Color.BLACK);
@@ -54,6 +57,7 @@ public class GameUI {
 			this.cleanScreen();
 			this.renderBackground();
 			this.renderWalls(walls);
+			this.renderNets(nets);
 			this.renderCats(cats);
 			graphics.drawImage(bufferedImage, null, 0, 0);
 		});
@@ -68,7 +72,7 @@ public class GameUI {
 		gui.setColor(Color.CYAN);
 		gui.fill(new Rectangle2D.Float(kWidthBorder, 0, WIDTH, height));
 		
-		gui.setColor(Color.WHITE);
+		gui.setColor(BACKGROUND_COLOR);
 		gui.fill(new Rectangle2D.Float(kWidthBorder, kHeightBorder, WIDTH, HEIGHT));
 	}
 	
@@ -106,6 +110,21 @@ public class GameUI {
 					height - kHeightBorder - y * SCALE - SCALE + WALL_BORDER,
 					(SCALE - WALL_BORDER) * 2,
 					(SCALE - WALL_BORDER) * 2
+			));
+		}
+	}
+	
+	private void renderNets(ArrayList<Net> nets) {
+		for(Net net : nets) {
+			float x = net.getBody().getPosition().x;
+			float y = net.getBody().getPosition().y;
+				
+			gui.setColor(Color.DARK_GRAY);
+			gui.fill(new Rectangle2D.Float(
+					kWidthBorder + x * SCALE - SCALE * Net.WIDTH,
+					height - kHeightBorder - y * SCALE - SCALE * Net.HEIGHT,
+					SCALE * 2 * Net.WIDTH,
+					SCALE * 2 * Net.HEIGHT
 			));
 		}
 	}
