@@ -52,21 +52,17 @@ public class Level {
 	}
 	
 	public void update() {
-		world.step(timeStep, velocityIterations, positionIterations);
-		world.clearForces();
-		this.gameUI.render(context, cats, walls, nets, barrels);
-	}
-
-	public World getWorld() {
-		return world;
-	}
-	
-	public ArrayList<Wall> getWalls() {
-		return walls;
-	}
-	
-	public ArrayList<Cat> getCats() {
-		return cats;
+		for(;;) {
+			world.step(timeStep, velocityIterations, positionIterations);
+			world.clearForces();
+			this.gameUI.render(context, cats, walls, nets, barrels);
+			
+			for(Cat cat : cats) {
+				if(!cat.isAlive()) {
+					return;
+				}
+			}
+		}
 	}
 	
 	private void createLevelBasicCat(float x, float y) {

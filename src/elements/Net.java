@@ -27,6 +27,7 @@ public class Net {
 		Body body = world.createBody(bodyDef);
 		createNetFixtures(body);
 		Net net = new Net(body);
+		body.setUserData(net);
 		return net;
 	}
 	
@@ -46,7 +47,7 @@ public class Net {
 	
 	@Override
 	public String toString() {
-		return "Net : " + body.getPosition().x + " " + body.getPosition().toString();
+		return "Net : " + body.getPosition().x + " " + body.getPosition().y;
 	}
 	
 }

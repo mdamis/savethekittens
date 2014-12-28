@@ -9,5 +9,7 @@ public interface Cat {
 	Body getBody();
 	void stop();
 	void move(Vec2 v);
+	void contactWithWall();
+	boolean isAlive();
 	
 }

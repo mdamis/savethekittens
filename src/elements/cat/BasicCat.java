@@ -15,6 +15,7 @@ public class BasicCat implements Cat {
 	public static final String USER_DATA = "BasicCat";
 	public static final float RADIUS = 1.0f;
 	private final Body body;
+	private int nbLives = 1;
 	
 	private BasicCat(Body body) {
 		this.body = body;
@@ -28,6 +29,7 @@ public class BasicCat implements Cat {
 		createBasicCatFixtures(body);
 		BasicCat basicCat = new BasicCat(body);
 		basicCat.move(new Vec2(-1.0f, -25.f));
+		body.setUserData(basicCat);
 		return basicCat;
 	}
 	
@@ -48,6 +50,11 @@ public class BasicCat implements Cat {
 	}
 	
 	@Override
+	public boolean isAlive() {
+		return nbLives != 0;
+	}
+	
+	@Override
 	public void move(Vec2 v) {
 		body.setLinearVelocity(v);
 	}
@@ -59,7 +66,13 @@ public class BasicCat implements Cat {
 	
 	@Override
 	public String toString() {
-		return "BasicCat : " + body.getPosition().x + " " + body.getPosition().toString();
+		return "BasicCat : " + body.getPosition().x + " " + body.getPosition().y;
+	}
+
+	@Override
+	public void contactWithWall() {
+		nbLives = 0;
+		System.out.println("A cast just died.\nGame Over");
 	}
 	
 }

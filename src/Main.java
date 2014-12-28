@@ -20,9 +20,7 @@ public class Main {
 			
 			Level level = Level.createLevel(context, width, height);
 
-			for(;;) {
-				level.update();
-			}
+			level.update();
 			
 		});
 	}

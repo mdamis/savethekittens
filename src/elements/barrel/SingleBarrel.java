@@ -69,6 +69,6 @@ public class SingleBarrel implements Barrel {
 	
 	@Override
 	public String toString() {
-		return "SingleBarrel : " + body.getPosition().x + " " + body.getPosition().toString();
+		return "SingleBarrel : " + body.getPosition().x + " " + body.getPosition().y;
 	}
 }

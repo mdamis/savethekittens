@@ -27,6 +27,7 @@ public class Wall {
 		Body body = world.createBody(bodyDef);
 		createWallFixtures(body);
 		Wall wall = new Wall(body);
+		body.setUserData(wall);
 		return wall;
 	}
 	
@@ -46,7 +47,7 @@ public class Wall {
 	
 	@Override
 	public String toString() {
-		return "Wall : " + body.getPosition().x + " " + body.getPosition().toString();
+		return "Wall : " + body.getPosition().x + " " + body.getPosition().y;
 	}
 	
 }
