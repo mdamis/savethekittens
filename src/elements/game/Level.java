@@ -41,7 +41,7 @@ public class Level {
 		level.setWorldCollisions();
 		level.createLevelBorders();
 		level.createLevelBasicCat(25.0f, 25.0f);
-		level.createLevelBasicCat(12.0f, 32.0f);
+		level.createLevelBasicCat(25.0f, 32.0f);
 		level.createLevelSingleBarrel(25.0f, 25.0f, "NORTH");
 		level.createLevelNet(23.0f, 19.0f);
 		return level;

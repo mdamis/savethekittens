@@ -25,15 +25,18 @@ public class Collisions implements ContactListener {
 	}
 	
 	private void beginContactType(Fixture fixtureA, Fixture fixtureB) {
+		Body bodyA = fixtureA.getBody();
 		Body bodyB = fixtureB.getBody();
+		
+		Object cat = bodyB.getUserData();
 		
 		switch((String)fixtureA.getUserData()) {
 		case Wall.USER_DATA:
-			Object cat = bodyB.getUserData();
 			((Cat) cat).contactWithWall();
 			break;
 		case Net.USER_DATA:
-			
+			Object net = bodyA.getUserData();
+			((Cat) cat).contactWithNet((Net) net);
 			break;
 		default:
 			break;

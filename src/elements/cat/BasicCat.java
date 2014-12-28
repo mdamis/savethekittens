@@ -44,6 +44,16 @@ public class BasicCat implements Cat {
 		body.createFixture(fixtureDef).setUserData(USER_DATA);
 	}
 	
+	private void kill() {
+		this.nbLives = 0;
+		System.out.println("A cat just died.\nGame Over");
+	}
+	
+	@Override
+	public boolean isActive() {
+		return body.isActive();
+	}
+	
 	@Override
 	public Body getBody() {
 		return body;
@@ -71,8 +81,17 @@ public class BasicCat implements Cat {
 
 	@Override
 	public void contactWithWall() {
-		nbLives = 0;
-		System.out.println("A cast just died.\nGame Over");
+		this.kill();
+	}
+	
+	@Override
+	public void contactWithNet(Net net) {
+		if(net.isFull()) {
+			this.kill();
+		}
+		this.stop();
+		this.body.setActive(false);
+		net.setFull();
 	}
 	
 }

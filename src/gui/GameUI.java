@@ -80,16 +80,20 @@ public class GameUI {
 	
 	private void renderCats(ArrayList<Cat> cats) {
 		for(Cat cat : cats) {
-			float x = cat.getBody().getPosition().x;
-			float y = cat.getBody().getPosition().y;
 			
-			gui.setColor(Color.MAGENTA);
-			gui.fill(new Ellipse2D.Float(
-					kWidthBorder + x * SCALE - SCALE,
-					height - kHeightBorder - y * SCALE - SCALE,
-					SCALE * 2,
-					SCALE * 2
-			));
+			if(cat.isActive()) {
+				float x = cat.getBody().getPosition().x;
+				float y = cat.getBody().getPosition().y;
+				
+				gui.setColor(Color.MAGENTA);
+				gui.fill(new Ellipse2D.Float(
+						kWidthBorder + x * SCALE - SCALE,
+						height - kHeightBorder - y * SCALE - SCALE,
+						SCALE * 2,
+						SCALE * 2
+				));
+			}
+			
 		}
 	}
 	
@@ -120,7 +124,7 @@ public class GameUI {
 		for(Barrel barrel : barrels) {
 			float x = barrel.getBody().getPosition().x;
 			float y = barrel.getBody().getPosition().y;
-				
+			
 			gui.setColor(Color.GREEN);
 			gui.fill(new Rectangle2D.Float(
 					kWidthBorder + x * SCALE - SCALE * Barrel.WIDTH,
@@ -135,8 +139,13 @@ public class GameUI {
 		for(Net net : nets) {
 			float x = net.getBody().getPosition().x;
 			float y = net.getBody().getPosition().y;
-				
-			gui.setColor(Color.DARK_GRAY);
+			
+			if(net.isFull()) {
+				gui.setColor(Color.YELLOW);
+			} else {
+				gui.setColor(Color.DARK_GRAY);
+			}
+			
 			gui.fill(new Rectangle2D.Float(
 					kWidthBorder + x * SCALE - SCALE * Net.WIDTH,
 					height - kHeightBorder - y * SCALE - SCALE * Net.HEIGHT,

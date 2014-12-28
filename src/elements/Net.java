@@ -15,6 +15,7 @@ public class Net {
 	public static final float WIDTH = 1.5f; // standard width of a Net
 	public static final float HEIGHT = 1.5f; // standard height of a Net
 	private final Body body;
+	private boolean isFull = false;
 	
 	private Net(Body body) {
 		this.body = body;
@@ -41,6 +42,10 @@ public class Net {
 		body.createFixture(fixtureDef).setUserData(USER_DATA);
 	}
 	
+	public boolean isFull() {
+		return isFull;
+	}
+	
 	public Body getBody() {
 		return body;
 	}
@@ -48,6 +53,10 @@ public class Net {
 	@Override
 	public String toString() {
 		return "Net : " + body.getPosition().x + " " + body.getPosition().y;
+	}
+
+	public void setFull() {
+		this.isFull = true;
 	}
 	
 }
