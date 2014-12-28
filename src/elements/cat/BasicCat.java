@@ -28,7 +28,6 @@ public class BasicCat implements Cat {
 		Body body = world.createBody(bodyDef);
 		createBasicCatFixtures(body);
 		BasicCat basicCat = new BasicCat(body);
-		basicCat.move(new Vec2(-1.0f, -25.f));
 		body.setUserData(basicCat);
 		return basicCat;
 	}

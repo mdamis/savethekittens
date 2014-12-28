@@ -8,6 +8,7 @@ import org.jbox2d.dynamics.BodyType;
 import org.jbox2d.dynamics.FixtureDef;
 import org.jbox2d.dynamics.World;
 
+import elements.cat.BasicCat;
 import elements.cat.Cat;
 
 public class SingleBarrel implements Barrel {
@@ -60,6 +61,19 @@ public class SingleBarrel implements Barrel {
 		fixtureDef.shape = shape;
 		fixtureDef.filter.categoryBits = BIT_BARREL;
 		body.createFixture(fixtureDef).setUserData(USER_DATA);;
+	}
+	
+	@Override
+	public Cat shootCat(World world) {
+		Cat cat = BasicCat.createBasicCat(world, body.getPosition().x, body.getPosition().y);
+		cat.move(angle);
+		this.body.setActive(false);
+		return cat;
+	}
+	
+	@Override
+	public boolean isActive() {
+		return body.isActive();
 	}
 	
 	@Override

@@ -122,16 +122,20 @@ public class GameUI {
 	
 	private void renderBarrels(ArrayList<Barrel> barrels) {
 		for(Barrel barrel : barrels) {
-			float x = barrel.getBody().getPosition().x;
-			float y = barrel.getBody().getPosition().y;
 			
-			gui.setColor(Color.GREEN);
-			gui.fill(new Rectangle2D.Float(
-					kWidthBorder + x * SCALE - SCALE * Barrel.WIDTH,
-					height - kHeightBorder - y * SCALE - SCALE * Barrel.HEIGHT,
-					SCALE * 2 * Barrel.WIDTH,
-					SCALE * 2 * Barrel.HEIGHT
-			));
+			if(barrel.isActive()) {
+				float x = barrel.getBody().getPosition().x;
+				float y = barrel.getBody().getPosition().y;
+				
+				gui.setColor(Color.GREEN);
+				gui.fill(new Rectangle2D.Float(
+						kWidthBorder + x * SCALE - SCALE * Barrel.WIDTH,
+						height - kHeightBorder - y * SCALE - SCALE * Barrel.HEIGHT,
+						SCALE * 2 * Barrel.WIDTH,
+						SCALE * 2 * Barrel.HEIGHT
+				));
+			}
+			
 		}
 	}
 	

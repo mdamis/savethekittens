@@ -40,10 +40,8 @@ public class Level {
 		Level level = new Level(context, width, height);
 		level.setWorldCollisions();
 		level.createLevelBorders();
-		level.createLevelBasicCat(25.0f, 25.0f);
-		level.createLevelBasicCat(25.0f, 32.0f);
-		level.createLevelSingleBarrel(25.0f, 25.0f, "NORTH");
-		level.createLevelNet(23.0f, 19.0f);
+		level.createLevelSingleBarrel(25.0f, 25.0f, "SW");
+		level.createLevelNet(3.5f, 3.5f);
 		return level;
 	}
 	
@@ -57,16 +55,18 @@ public class Level {
 			world.clearForces();
 			this.gameUI.render(context, cats, walls, nets, barrels);
 			
+			for(Barrel barrel : barrels) {
+				if(barrel.isActive()) {
+					cats.add(barrel.shootCat(world));
+				}
+			}
+			
 			for(Cat cat : cats) {
 				if(!cat.isAlive()) {
 					return;
 				}
 			}
 		}
-	}
-	
-	private void createLevelBasicCat(float x, float y) {
-		cats.add(BasicCat.createBasicCat(world, x, y));
 	}
 	
 	private void createLevelNet(float x, float y) {
