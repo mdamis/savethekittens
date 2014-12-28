@@ -8,7 +8,7 @@ import org.jbox2d.dynamics.BodyType;
 import org.jbox2d.dynamics.FixtureDef;
 import org.jbox2d.dynamics.World;
 
-import elements.cat.BasicCat;
+import elements.cat.BouncingCat;
 import elements.cat.Cat;
 
 public class SingleBarrel implements Barrel {
@@ -65,7 +65,7 @@ public class SingleBarrel implements Barrel {
 	
 	@Override
 	public Cat shootCat(World world) {
-		Cat cat = BasicCat.createBasicCat(world, body.getPosition().x, body.getPosition().y);
+		Cat cat = BouncingCat.create(world, body.getPosition().x, body.getPosition().y);
 		cat.move(angle);
 		this.body.setActive(false);
 		return cat;

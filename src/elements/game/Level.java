@@ -4,7 +4,6 @@ import elements.Net;
 import elements.Wall;
 import elements.barrel.Barrel;
 import elements.barrel.SingleBarrel;
-import elements.cat.BasicCat;
 import elements.cat.Cat;
 import fr.umlv.zen4.ApplicationContext;
 import gui.GameUI;
@@ -40,7 +39,7 @@ public class Level {
 		Level level = new Level(context, width, height);
 		level.setWorldCollisions();
 		level.createLevelBorders();
-		level.createLevelSingleBarrel(25.0f, 25.0f, "SW");
+		level.createLevelSingleBarrel(25.0f, 25.0f, "SE");
 		level.createLevelNet(3.5f, 3.5f);
 		return level;
 	}

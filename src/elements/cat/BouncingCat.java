@@ -10,22 +10,22 @@ import org.jbox2d.dynamics.World;
 import elements.Net;
 import elements.Wall;
 
-public class BasicCat extends AbstractCat {
-	public static final int NB_LIVES = 1;
+public class BouncingCat extends AbstractCat {
+	public static final int NB_LIVES = 3;
 	
-	private BasicCat(Body body) {
+	BouncingCat(Body body) {
 		super(body, NB_LIVES);
 	}
 
-	public static BasicCat create(World world, float x, float y) {
+	public static BouncingCat create(World world, float x, float y) {
 		BodyDef bodyDef = new BodyDef();
 		bodyDef.position.set(x, y);
 		bodyDef.type = BodyType.DYNAMIC;
 		Body body = world.createBody(bodyDef);
 		createFixtures(body);
-		BasicCat basicCat = new BasicCat(body);
-		body.setUserData(basicCat);
-		return basicCat;
+		BouncingCat bouncingCat = new BouncingCat(body);
+		body.setUserData(bouncingCat);
+		return bouncingCat;
 	}
 	
 	private static void createFixtures(Body body) {
@@ -33,19 +33,20 @@ public class BasicCat extends AbstractCat {
 		shape.setRadius(RADIUS);
 		FixtureDef fixtureDef = new FixtureDef();
 		fixtureDef.shape = shape;
+		fixtureDef.restitution = 0.5f;
 		fixtureDef.filter.categoryBits = BIT_CAT;
 		fixtureDef.filter.maskBits = Wall.BIT_WALL | Net.BIT_NET;
 		body.createFixture(fixtureDef).setUserData(USER_DATA);
 	}
 	
 	@Override
-	public String toString() {
-		return "BasicCat : " + super.toString();
+	public void contactWithWall() {
+		killOnce();
 	}
 
 	@Override
-	public void contactWithWall() {
-		kill();
+	public String toString() {
+		return "BouncingCat : " + super.toString();
 	}
-	
+
 }
