@@ -16,6 +16,7 @@ public interface Barrel {
 	
 	public static final float WIDTH = 1.5f;
 	public static final float HEIGHT = 1.5f;
+	public static final int BIT_BARREL = 8;
 	
 	Body getBody();
 

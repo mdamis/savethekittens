@@ -7,7 +7,11 @@ import org.jbox2d.dynamics.BodyType;
 import org.jbox2d.dynamics.FixtureDef;
 import org.jbox2d.dynamics.World;
 
+import elements.cat.Cat;
+
 public class Wall {
+	public static final String USER_DATA = "Wall";
+	public static final int BIT_WALL = 2;
 	public static final float WIDTH = 1.0f; // standard width of a Wall
 	public static final float HEIGHT = 1.0f; // standard height of a Wall
 	private final Body body;
@@ -31,7 +35,9 @@ public class Wall {
 		shape.setAsBox(WIDTH, HEIGHT);
 		FixtureDef fixtureDef = new FixtureDef();
 		fixtureDef.shape = shape;
-		body.createFixture(fixtureDef);
+		fixtureDef.filter.categoryBits = BIT_WALL;
+		fixtureDef.filter.maskBits = Cat.BIT_CAT;
+		body.createFixture(fixtureDef).setUserData(USER_DATA);
 	}
 	
 	public Body getBody() {

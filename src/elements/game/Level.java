@@ -8,6 +8,7 @@ import elements.cat.BasicCat;
 import elements.cat.Cat;
 import fr.umlv.zen4.ApplicationContext;
 import gui.GameUI;
+import handlers.Collisions;
 
 import java.util.ArrayList;
 
@@ -37,13 +38,17 @@ public class Level {
 	
 	public static Level createLevel(ApplicationContext context, float width, float height) {
 		Level level = new Level(context, width, height);
-		
+		level.setWorldCollisions();
 		level.createLevelBorders();
 		level.createLevelBasicCat(25.0f, 25.0f);
 		level.createLevelBasicCat(12.0f, 32.0f);
-		level.createLevelSingleBarrel(15.0f, 25.0f, "NORTH");
+		level.createLevelSingleBarrel(25.0f, 25.0f, "NORTH");
 		level.createLevelNet(23.0f, 19.0f);
 		return level;
+	}
+	
+	private void setWorldCollisions() {
+		world.setContactListener(new Collisions());
 	}
 	
 	public void update() {

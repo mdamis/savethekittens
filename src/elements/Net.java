@@ -7,7 +7,11 @@ import org.jbox2d.dynamics.BodyType;
 import org.jbox2d.dynamics.FixtureDef;
 import org.jbox2d.dynamics.World;
 
+import elements.cat.Cat;
+
 public class Net {
+	public static final String USER_DATA = "Net";
+	public static final int BIT_NET = 4;
 	public static final float WIDTH = 1.5f; // standard width of a Net
 	public static final float HEIGHT = 1.5f; // standard height of a Net
 	private final Body body;
@@ -31,7 +35,9 @@ public class Net {
 		shape.setAsBox(WIDTH, HEIGHT);
 		FixtureDef fixtureDef = new FixtureDef();
 		fixtureDef.shape = shape;
-		body.createFixture(fixtureDef);
+		fixtureDef.filter.categoryBits = BIT_NET;
+		fixtureDef.filter.maskBits = Cat.BIT_CAT;
+		body.createFixture(fixtureDef).setUserData(USER_DATA);
 	}
 	
 	public Body getBody() {

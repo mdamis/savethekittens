@@ -8,7 +8,11 @@ import org.jbox2d.dynamics.BodyType;
 import org.jbox2d.dynamics.FixtureDef;
 import org.jbox2d.dynamics.World;
 
+import elements.Net;
+import elements.Wall;
+
 public class BasicCat implements Cat {
+	public static final String USER_DATA = "BasicCat";
 	public static final float RADIUS = 1.0f;
 	private final Body body;
 	
@@ -23,6 +27,7 @@ public class BasicCat implements Cat {
 		Body body = world.createBody(bodyDef);
 		createBasicCatFixtures(body);
 		BasicCat basicCat = new BasicCat(body);
+		basicCat.move(new Vec2(-1.0f, -25.f));
 		return basicCat;
 	}
 	
@@ -31,7 +36,10 @@ public class BasicCat implements Cat {
 		shape.setRadius(RADIUS);
 		FixtureDef fixtureDef = new FixtureDef();
 		fixtureDef.shape = shape;
-		body.createFixture(fixtureDef);
+		fixtureDef.restitution = 0.5f;
+		fixtureDef.filter.categoryBits = BIT_CAT;
+		fixtureDef.filter.maskBits = Wall.BIT_WALL | Net.BIT_NET;
+		body.createFixture(fixtureDef).setUserData(USER_DATA);
 	}
 	
 	@Override

@@ -8,7 +8,10 @@ import org.jbox2d.dynamics.BodyType;
 import org.jbox2d.dynamics.FixtureDef;
 import org.jbox2d.dynamics.World;
 
+import elements.cat.Cat;
+
 public class SingleBarrel implements Barrel {
+	public static final String USER_DATA = "SingleBarrel";
 	private final Body body;
 	private final Vec2 angle;
 	
@@ -55,7 +58,8 @@ public class SingleBarrel implements Barrel {
 		shape.setAsBox(WIDTH, HEIGHT);
 		FixtureDef fixtureDef = new FixtureDef();
 		fixtureDef.shape = shape;
-		body.createFixture(fixtureDef);
+		fixtureDef.filter.categoryBits = BIT_BARREL;
+		body.createFixture(fixtureDef).setUserData(USER_DATA);;
 	}
 	
 	@Override
