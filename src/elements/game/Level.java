@@ -40,9 +40,6 @@ public class Level {
 	public static Level createLevel(ApplicationContext context, float width, float height) {
 		Level level = new Level(context, width, height);
 		level.setWorldCollisions();
-		level.createLevelBorders();
-		level.createLevelAutomaticBarrel(25.0f, 25.0f, "SE");
-		level.createLevelNet(3.5f, 3.5f);
 		return level;
 	}
 	
@@ -56,15 +53,13 @@ public class Level {
 			world.clearForces();
 			this.gameUI.render(context, cats, walls, nets, barrels);
 			
-			if(nbIterations % 10 == 0) {
+			if(nbIterations % 25 == 0) {
 				for(Barrel barrel : barrels) {
 					if(barrel.isActive()) {
-						cats.add(barrel.addCat(world, "BouncingCat"));
 						barrel.shootCat();
 					}
 				}
 			}
-			
 			
 			for(Cat cat : cats) {
 				if(!cat.isAlive()) {
@@ -75,19 +70,31 @@ public class Level {
 		}
 	}
 	
-	private void createLevelNet(float x, float y) {
+	public void createLevelNet(float x, float y) {
 		nets.add(Net.createNet(world, x, y));
 	}
 	
-	private void createLevelSingleBarrel(float x, float y, String angleString) {
-		barrels.add(SingleBarrel.create(world, x, y, angleString));
+	public SingleBarrel createLevelSingleBarrel(float x, float y, String angleString) {
+		SingleBarrel barrel = SingleBarrel.create(world, x, y, angleString);
+		barrels.add(barrel);
+		return barrel;
 	}
 	
-	private void createLevelAutomaticBarrel(float x, float y, String angleString) {
-		barrels.add(AutomaticBarrel.create(world, x, y, angleString));
+	public AutomaticBarrel createLevelAutomaticBarrel(float x, float y, String angleString) {
+		AutomaticBarrel barrel = AutomaticBarrel.create(world, x, y, angleString);
+		barrels.add(barrel);
+		return barrel;
 	}
 	
-	private void createLevelBorders() {
+	public void addCatBarrel(Barrel barrel, String catType) {
+		cats.add(barrel.addCat(world, catType));
+	}
+	
+	public void createLevelWall(float x, float y) {
+		walls.add(Wall.createWall(world, x, y));
+	}
+	
+	public void createLevelBorders() {
 		
 		//Bottom border
 		for(float x = Wall.WIDTH; x < WIDTH; x += (2 * Wall.WIDTH)) {

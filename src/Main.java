@@ -1,5 +1,7 @@
 import java.awt.Color;
+import java.io.IOException;
 
+import parser.Parser;
 import elements.game.Level;
 import fr.umlv.zen4.Application;
 import fr.umlv.zen4.ScreenInfo;
@@ -18,9 +20,15 @@ public class Main {
 			Menu menu = Menu.createMenu(width, height);
 			menu.render(context);
 			
-			Level level = Level.createLevel(context, width, height);
-
+			Level level = null;;
+			
+			try {
+				level = Parser.parseLevel("levels/level1.txt", context, width, height);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 			level.update();
+
 			
 		});
 	}
