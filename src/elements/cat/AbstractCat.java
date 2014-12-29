@@ -12,7 +12,7 @@ public abstract class AbstractCat implements Cat{
 	private final Body body;
 	private int nbLives;
 	
-	AbstractCat(Body body, int nbLives) {
+	protected AbstractCat(Body body, int nbLives) {
 		this.body = body;
 		this.nbLives = nbLives;
 	}

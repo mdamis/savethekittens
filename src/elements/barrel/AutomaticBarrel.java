@@ -1,5 +1,7 @@
 package elements.barrel;
 
+import java.util.ArrayList;
+
 import org.jbox2d.collision.shapes.PolygonShape;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.Body;
@@ -10,21 +12,21 @@ import org.jbox2d.dynamics.World;
 
 import elements.cat.Cat;
 
-public class SingleBarrel extends AbstractBarrel {
-	private Cat cat;
+public class AutomaticBarrel extends AbstractBarrel {
+	private final ArrayList<Cat> cats = new ArrayList<>();
 	
-	private SingleBarrel(Body body, Vec2 angle) {
+	private AutomaticBarrel(Body body, Vec2 angle) {
 		super(body, angle);
 	}
 	
-	public static SingleBarrel create(World world, float x, float y, String angleString) {
+	public static AutomaticBarrel create(World world, float x, float y, String angleString) {
 		BodyDef bodyDef = new BodyDef();
 		bodyDef.position.set(x, y);
 		bodyDef.type = BodyType.STATIC;
 		Body body = world.createBody(bodyDef);
 		createFixtures(body);
-		SingleBarrel singleBarrel = new SingleBarrel(body, parseAngle(angleString));
-		return singleBarrel;
+		AutomaticBarrel automaticBarrel = new AutomaticBarrel(body, parseAngle(angleString));
+		return automaticBarrel;
 	}
 
 	private static void createFixtures(Body body) {
@@ -35,21 +37,23 @@ public class SingleBarrel extends AbstractBarrel {
 		fixtureDef.filter.categoryBits = BIT_BARREL;
 		body.createFixture(fixtureDef).setUserData(USER_DATA);;
 	}
-
+	
 	@Override
 	void addCat(Cat cat) {
-		this.cat = cat;
-	}
-
-	@Override
-	public void shootCat() {
-		cat.move(getAngle());
-		setInactive();
-	}
-
-	@Override
-	public String toString() {
-		return "SingleBarrel : " + super.toString();
+		cats.add(cat);
 	}
 	
+	@Override
+	public void shootCat() {
+		cats.remove(0).move(getAngle());
+		if(cats.size() <= 0) {
+			setInactive();
+		}
+	}
+	
+	@Override
+	public String toString() {
+		return "AutomaticBarrel : " + super.toString();
+	}
+
 }

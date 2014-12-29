@@ -2,6 +2,7 @@ package elements.game;
 
 import elements.Net;
 import elements.Wall;
+import elements.barrel.AutomaticBarrel;
 import elements.barrel.Barrel;
 import elements.barrel.SingleBarrel;
 import elements.cat.Cat;
@@ -29,6 +30,7 @@ public class Level {
 	private static final int velocityIterations = 6;
 	private static final int positionIterations = 2;
 	private static final float timeStep = 1.0f / 60.0f;
+	private int nbIterations = 0;
 	
 	private Level(ApplicationContext context, float width, float height) {
 		this.context = context;
@@ -39,7 +41,7 @@ public class Level {
 		Level level = new Level(context, width, height);
 		level.setWorldCollisions();
 		level.createLevelBorders();
-		level.createLevelSingleBarrel(25.0f, 25.0f, "SE");
+		level.createLevelAutomaticBarrel(25.0f, 25.0f, "SE");
 		level.createLevelNet(3.5f, 3.5f);
 		return level;
 	}
@@ -54,17 +56,22 @@ public class Level {
 			world.clearForces();
 			this.gameUI.render(context, cats, walls, nets, barrels);
 			
-			for(Barrel barrel : barrels) {
-				if(barrel.isActive()) {
-					cats.add(barrel.shootCat(world));
+			if(nbIterations % 10 == 0) {
+				for(Barrel barrel : barrels) {
+					if(barrel.isActive()) {
+						cats.add(barrel.addCat(world, "BouncingCat"));
+						barrel.shootCat();
+					}
 				}
 			}
+			
 			
 			for(Cat cat : cats) {
 				if(!cat.isAlive()) {
 					return;
 				}
 			}
+			nbIterations++;
 		}
 	}
 	
@@ -74,6 +81,10 @@ public class Level {
 	
 	private void createLevelSingleBarrel(float x, float y, String angleString) {
 		barrels.add(SingleBarrel.create(world, x, y, angleString));
+	}
+	
+	private void createLevelAutomaticBarrel(float x, float y, String angleString) {
+		barrels.add(AutomaticBarrel.create(world, x, y, angleString));
 	}
 	
 	private void createLevelBorders() {

@@ -23,6 +23,7 @@ public interface Barrel {
 	
 	Body getBody();
 	boolean isActive();
-	Cat shootCat(World world);
+	void shootCat();
+	Cat addCat(World world, String catType);
 
 }
