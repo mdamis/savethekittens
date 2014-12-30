@@ -41,25 +41,30 @@ public class Menu {
 		return menu;
 	}
 	
-	public void menuSelection(ApplicationContext context) {
+	public int menuSelection(ApplicationContext context) {
 		renderMenu(context);
+		int levelNumber = 1;
 		
 		for(;;) {
+			
 			MotionEvent event;
 			try {
 				event = context.waitAndBlockUntilAMotion();
 			} catch(InterruptedException e) {
 				throw new AssertionError(e);
 			}
-			
+			//PLAY
 			if(event.getAction() == Action.UP &&
 					(event.getX() > kWidthFifth && event.getX() < width - kWidthFifth) &&
 					(event.getY() > 4 * kHeightEighth && event.getY() < 5 * kHeightEighth)) {
 				whiteScreenAnimation(context);
-				levelSelection(context);
-				return;
+				if((levelNumber =levelSelection(context)) != -1) {
+					return levelNumber;
+				} else {
+					renderMenu(context);
+				}
 			}
-			
+			//QUIT
 			if(event.getAction() == Action.UP &&
 					(event.getX() > kWidthFifth && event.getX() < width - kWidthFifth) &&
 					(event.getY() > 6 * kHeightEighth && event.getY() < 7 * kHeightEighth)) {
@@ -68,7 +73,7 @@ public class Menu {
 		}
 	}
 	
-	public void levelSelection(ApplicationContext context) {
+	public int levelSelection(ApplicationContext context) {
 		int levelNumber = 1;
 		int nbLevels = 10;
 		
@@ -80,7 +85,13 @@ public class Menu {
 			} catch(InterruptedException e) {
 				throw new AssertionError(e);
 			}
-			
+			//PLAY
+			if(event.getAction() == Action.UP &&
+					(event.getX() > (2*kWidthSixth) && event.getX() < (4*kWidthSixth)) &&
+					(event.getY() > 4 * kHeightEighth && event.getY() < 5 * kHeightEighth)) {
+				return levelNumber;
+			}
+			//PREVIOUS
 			if(event.getAction() == Action.UP &&
 					(event.getX() > (2*kWidthSixth) && event.getX() < (3*kWidthSixth)) &&
 					(event.getY() > 5 * kHeightEighth && event.getY() < 6 * kHeightEighth)) {
@@ -90,7 +101,7 @@ public class Menu {
 					levelNumber--;
 				}
 			}
-			
+			//NEXT
 			if(event.getAction() == Action.UP &&
 					(event.getX() > (3*kWidthSixth) && event.getX() < (4*kWidthSixth)) &&
 					(event.getY() > 5 * kHeightEighth && event.getY() < 6 * kHeightEighth)) {
@@ -99,6 +110,12 @@ public class Menu {
 				} else {
 					levelNumber++;
 				}
+			}
+			//BACK
+			if(event.getAction() == Action.UP &&
+					(event.getX() > (2*kWidthSixth) && event.getX() < (4*kWidthSixth)) &&
+					(event.getY() > 6 * kHeightEighth && event.getY() < 7 * kHeightEighth)) {
+				return -1;
 			}
 		}
 	}
@@ -181,12 +198,10 @@ public class Menu {
 	}
 	
 	private void whiteScreenAnimation(ApplicationContext context) {
-		
 		float windowSize = Math.max(width, height);
 		int speed = 25;
 			
 		for(float i=0; i<(3.0f/2.0f)*windowSize; i+=speed) {
-				
 			float ellipseWidth = i;
 				
 			context.renderFrame((graphics, contentLost) -> {
@@ -222,8 +237,6 @@ public class Menu {
 			
 			int ellipseBorder = 3;
 			
-			
-			
 			graphics.setColor(Color.BLACK);
 			graphics.fill(new Ellipse2D.Float(x, y, kWidthSixth, kWidthSixth));
 			
@@ -235,7 +248,6 @@ public class Menu {
 					kWidthSixth - 2 * ellipseBorder
 			));
 			renderLevelSelectionText(graphics, Color.BLACK, String.valueOf(levelNumber), 80, x, y, kWidthSixth, kWidthSixth);
-			
 			
 			renderLevelSelectionButtons(graphics, "PLAY", Color.DARK_GRAY, 2*kWidthSixth, 4*kHeightEighth, 2*kWidthSixth, kHeightEighth);
 			renderLevelSelectionButtons(graphics, "PREVIOUS",  Color.LIGHT_GRAY, 2*kWidthSixth, 5*kHeightEighth, kWidthSixth, kHeightEighth);

@@ -20,12 +20,11 @@ public class Main {
 			Menu menu = Menu.createMenu(width, height);
 			
 			for(;;) {
-				menu.menuSelection(context);
-				
+				int levelNumber = menu.menuSelection(context);
 				Level level = null;;
 				
 				try {
-					level = Parser.parseLevel("levels/level1.txt", context, width, height);
+					level = Parser.parseLevel(levelNumber, context, width, height);
 				} catch (IOException e) {
 					e.printStackTrace();
 				}

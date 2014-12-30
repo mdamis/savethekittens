@@ -16,7 +16,10 @@ public class Parser {
 	public static final int SPLITS_BARREL = 6;
 	public static final int SPLITS_CAT = 2;
 	
-	public static Level parseLevel(String path, ApplicationContext context, float width, float height) throws IOException {
+	public static Level parseLevel(int levelNumber, ApplicationContext context, float width, float height) throws IOException {
+		
+		String path = "levels/level";
+		path += String.valueOf(levelNumber) + ".txt";
 		
 		Level level = Level.createLevel(context, width, height);
 		level.createLevelBorders();
@@ -110,7 +113,5 @@ public class Parser {
 		
 		return level;
 	}
-	
-	
 	
 }
