@@ -140,7 +140,7 @@ public class Menu {
 					graphics.fill(new Rectangle2D.Float(0, 0, width, height));
 				}
 				
-				graphics.setColor(Color.CYAN);
+				graphics.setColor(new Color(100, 150, 175));
 				graphics.fill(new Rectangle2D.Float(0, 0, width, height));
 				
 				graphics.setColor(Color.WHITE);

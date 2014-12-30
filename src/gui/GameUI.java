@@ -61,6 +61,7 @@ public class GameUI {
 			
 			cleanScreen();
 			renderBackground();
+			renderText("START", kWidthBorder, height - kHeightBorder, WIDTH, kHeightBorder);
 			renderWalls(walls);
 			renderNets(nets);
 			renderBarrels(barrels);
@@ -75,11 +76,25 @@ public class GameUI {
 	}
 	
 	private void renderBackground() {
-		gui.setColor(Color.CYAN);
+		gui.setColor(new Color(40, 50, 75));
 		gui.fill(new Rectangle2D.Float(kWidthBorder, 0, WIDTH, height));
 		
 		gui.setColor(BACKGROUND_COLOR);
 		gui.fill(new Rectangle2D.Float(kWidthBorder, kHeightBorder, WIDTH, HEIGHT));
+	}
+	
+	private void renderText(String text, float x, float y, float width, float height) {
+		gui.setColor(Color.WHITE);
+		Font font = new Font("Helvetica Neue", Font.BOLD, 30);
+		gui.setFont(font);
+		FontMetrics fm = gui.getFontMetrics(font);
+		
+		Rectangle2D rect = fm.getStringBounds(text, gui);
+		float textHeight = (float) rect.getHeight(); 
+		float textWidth = (float) rect.getWidth();
+		x += (width  - textWidth)  / 2;
+		y += (height - textHeight) / 2 + fm.getAscent();
+		gui.drawString(text, x, y);
 	}
 	
 	private void renderCats(ArrayList<Cat> cats) {
@@ -203,5 +218,13 @@ public class GameUI {
 			}
 		} while(event.getAction() != Action.UP);
 		
+	}
+
+	public boolean actionStartButton(float x, float y) {
+		if((x >= kWidthBorder && x <= width - kWidthBorder) &&
+				(y >= height - kHeightBorder && y <= height)) {
+			return true;
+		}
+		return false;
 	}
 }

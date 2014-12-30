@@ -7,6 +7,8 @@ import elements.barrel.Barrel;
 import elements.barrel.SingleBarrel;
 import elements.cat.Cat;
 import fr.umlv.zen4.ApplicationContext;
+import fr.umlv.zen4.MotionEvent;
+import fr.umlv.zen4.MotionEvent.Action;
 import gui.GameUI;
 import handlers.Collisions;
 
@@ -47,11 +49,36 @@ public class Level {
 		world.setContactListener(new Collisions());
 	}
 	
-	public void update() {
+	public void play() {
+		gameUI.render(context, cats, walls, nets, barrels);
+		
+		boolean isStarted = false;
+		
+		do {
+			
+			MotionEvent event;
+			try {
+				event = context.waitAndBlockUntilAMotion();
+			} catch(InterruptedException e) {
+				throw new AssertionError(e);
+			}
+			
+			if(event.getAction() == Action.UP) {
+				if(gameUI.actionStartButton(event.getX(), event.getY())) {
+					isStarted = true;
+				}
+			}
+			
+		} while(!isStarted);
+		
+		update();
+	}
+	
+	private void update() {
 		for(;;) {
 			world.step(timeStep, velocityIterations, positionIterations);
 			world.clearForces();
-			this.gameUI.render(context, cats, walls, nets, barrels);
+			gameUI.render(context, cats, walls, nets, barrels);
 			
 			if(nbIterations % 25 == 0) {
 				for(Barrel barrel : barrels) {
