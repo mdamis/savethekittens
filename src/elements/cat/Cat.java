@@ -4,6 +4,7 @@ import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.Body;
 
 import elements.Net;
+import elements.item.Bomb;
 
 public interface Cat {
 	public static final int BIT_CAT = 16;
@@ -15,5 +16,6 @@ public interface Cat {
 	void contactWithWall();
 	void contactWithNet(Net net);
 	boolean isActive();
+	void contactWithBomb(Bomb bomb);
 	
 }

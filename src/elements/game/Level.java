@@ -52,7 +52,7 @@ public class Level {
 	}
 	
 	public void play() {
-		bomb = Bomb.create(world, 15.0f, 15.0f, 2);
+		bomb = Bomb.create(world, 26.0f, 23.0f, 1);
 		gameUI.render(context, cats, walls, nets, barrels, bomb);
 		
 		boolean isStarted = false;
@@ -90,6 +90,8 @@ public class Level {
 					}
 				}
 			}
+			
+			bomb.explode(nbIterations / 60);
 			
 			if(isComplete()) {
 				System.out.println("Victory");

@@ -14,8 +14,10 @@ public class Bomb {
 	public static final int BIT_BOMB = 32;
 	public static final float RADIUS = 1.0f;
 	public static final float RANGE = 5.0f;
+	public static float blastPower = 300;
 	private final Body body;
 	private final int seconds;
+	private int turns = 0;
 	private boolean hasExploded = false;
 
 	private Bomb(Body body, int seconds) {
@@ -31,6 +33,7 @@ public class Bomb {
 		createFixtures(body);
 		Bomb bomb = new Bomb(body, seconds);
 		body.setUserData(bomb);
+		body.setActive(false);
 		return bomb;
 	}
 	
@@ -48,6 +51,18 @@ public class Bomb {
 		return body;
 	}
 	
+	public void explode(int gameSeconds) {
+		if(gameSeconds >= seconds && !hasExploded) {
+			turns++;
+			if(turns == 1) {
+				body.setActive(true);
+			} else if(turns > 5) {
+				body.setActive(false);
+				hasExploded = true;
+			}
+		}
+	}
+	
 	public boolean hasExploded() {
 		return hasExploded;
 	}
@@ -59,6 +74,10 @@ public class Bomb {
 	@Override
 	public String toString() {
 		return "Bomb : " + body.getPosition().x + " " + body.getPosition().y;
+	}
+
+	public float getBlastPower() {
+		return blastPower;
 	}
 	
 }

@@ -187,24 +187,27 @@ public class GameUI {
 		
 		float scale = Bomb.RADIUS * SCALE;
 		
-		if(bomb.isActive()) {
-			gui.setColor(new Color(255, 50, 50));
+		if(!bomb.hasExploded()) {
+			if(bomb.isActive()) {
+				gui.setColor(new Color(255, 50, 50));
+				gui.fill(new Ellipse2D.Float(
+						kWidthBorder + x * scale - Bomb.RANGE * SCALE,
+						height - kHeightBorder - y * scale - Bomb.RANGE * SCALE,
+						Bomb.RANGE * 2 * SCALE,
+						Bomb.RANGE * 2 * SCALE
+				));
+			}
+			
+			gui.setColor(Color.BLACK);
+			
 			gui.fill(new Ellipse2D.Float(
-					kWidthBorder + x * scale - Bomb.RANGE * SCALE,
-					height - kHeightBorder - y * scale - Bomb.RANGE * SCALE,
-					Bomb.RANGE * 2 * SCALE,
-					Bomb.RANGE * 2 * SCALE
+					kWidthBorder + x * scale - scale,
+					height - kHeightBorder - y * scale - scale,
+					scale * 2,
+					scale * 2
 			));
 		}
 		
-		gui.setColor(Color.BLACK);
-		
-		gui.fill(new Ellipse2D.Float(
-				kWidthBorder + x * scale - scale,
-				height - kHeightBorder - y * scale - scale,
-				scale * 2,
-				scale * 2
-		));
 	}
 
 	public void victory(ApplicationContext context) {

@@ -10,6 +10,7 @@ import org.jbox2d.dynamics.contacts.Contact;
 import elements.Net;
 import elements.Wall;
 import elements.cat.Cat;
+import elements.item.Bomb;
 
 public class Collisions implements ContactListener {
 
@@ -38,6 +39,9 @@ public class Collisions implements ContactListener {
 			Object net = bodyA.getUserData();
 			((Cat) cat).contactWithNet((Net) net);
 			break;
+		case Bomb.USER_DATA:
+			Object bomb = bodyA.getUserData();
+			((Cat) cat).contactWithBomb((Bomb) bomb);
 		default:
 			break;
 		}	

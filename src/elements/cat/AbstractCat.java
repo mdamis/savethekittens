@@ -4,6 +4,7 @@ import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.Body;
 
 import elements.Net;
+import elements.item.Bomb;
 
 public abstract class AbstractCat implements Cat{
 
@@ -59,6 +60,22 @@ public abstract class AbstractCat implements Cat{
 		}
 		stop();
 		net.setFull();
+	}
+	
+	@Override
+	public void contactWithBomb(Bomb bomb) {
+		Vec2 blastDir = new Vec2(
+				body.getPosition().x - bomb.getBody().getPosition().x,
+				body.getPosition().y - bomb.getBody().getPosition().y); 
+		float distance = blastDir.normalize();
+		
+		if(distance == 0) {
+			return;
+		}
+		
+		float invDistance = 1.0f / distance;
+		float impulseMag = bomb.getBlastPower() * invDistance * invDistance;
+		body.applyLinearImpulse(blastDir.mul(impulseMag), body.getPosition());
 	}
 	
 	@Override

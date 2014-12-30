@@ -9,6 +9,7 @@ import org.jbox2d.dynamics.World;
 
 import elements.Net;
 import elements.Wall;
+import elements.item.Bomb;
 
 public class BouncingCat extends AbstractCat {
 	public static final int NB_LIVES = 3;
@@ -35,7 +36,7 @@ public class BouncingCat extends AbstractCat {
 		fixtureDef.shape = shape;
 		fixtureDef.restitution = 0.5f;
 		fixtureDef.filter.categoryBits = BIT_CAT;
-		fixtureDef.filter.maskBits = Wall.BIT_WALL | Net.BIT_NET;
+		fixtureDef.filter.maskBits = Wall.BIT_WALL | Net.BIT_NET | Bomb.BIT_BOMB;
 		body.createFixture(fixtureDef).setUserData(USER_DATA);
 	}
 	
