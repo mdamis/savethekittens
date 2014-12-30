@@ -14,6 +14,7 @@ import elements.Wall;
 import elements.barrel.Barrel;
 import elements.cat.Cat;
 import elements.game.Level;
+import elements.item.Bomb;
 import fr.umlv.zen4.ApplicationContext;
 import fr.umlv.zen4.MotionEvent;
 import fr.umlv.zen4.MotionEvent.Action;
@@ -52,7 +53,8 @@ public class GameUI {
 	}
 	
 	public void render(ApplicationContext context, ArrayList<Cat> cats, 
-			ArrayList<Wall> walls, ArrayList<Net> nets, ArrayList<Barrel> barrels) {
+			ArrayList<Wall> walls, ArrayList<Net> nets, ArrayList<Barrel> barrels,
+			Bomb bomb) {
 		context.renderFrame((graphics, contentLost) -> {
 			if (contentLost) {
 				graphics.setColor(Color.BLACK);
@@ -66,6 +68,7 @@ public class GameUI {
 			renderNets(nets);
 			renderBarrels(barrels);
 			renderCats(cats);
+			renderBomb(bomb);
 			graphics.drawImage(bufferedImage, null, 0, 0);
 		});
 	}
@@ -176,6 +179,32 @@ public class GameUI {
 					SCALE * 2 * Net.HEIGHT
 			));
 		}
+	}
+	
+	private void renderBomb(Bomb bomb) {
+		float x = bomb.getBody().getPosition().x;
+		float y = bomb.getBody().getPosition().y;
+		
+		float scale = Bomb.RADIUS * SCALE;
+		
+		if(bomb.isActive()) {
+			gui.setColor(new Color(255, 50, 50));
+			gui.fill(new Ellipse2D.Float(
+					kWidthBorder + x * scale - Bomb.RANGE * SCALE,
+					height - kHeightBorder - y * scale - Bomb.RANGE * SCALE,
+					Bomb.RANGE * 2 * SCALE,
+					Bomb.RANGE * 2 * SCALE
+			));
+		}
+		
+		gui.setColor(Color.BLACK);
+		
+		gui.fill(new Ellipse2D.Float(
+				kWidthBorder + x * scale - scale,
+				height - kHeightBorder - y * scale - scale,
+				scale * 2,
+				scale * 2
+		));
 	}
 
 	public void victory(ApplicationContext context) {

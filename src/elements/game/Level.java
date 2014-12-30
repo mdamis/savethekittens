@@ -6,6 +6,7 @@ import elements.barrel.AutomaticBarrel;
 import elements.barrel.Barrel;
 import elements.barrel.SingleBarrel;
 import elements.cat.Cat;
+import elements.item.Bomb;
 import fr.umlv.zen4.ApplicationContext;
 import fr.umlv.zen4.MotionEvent;
 import fr.umlv.zen4.MotionEvent.Action;
@@ -28,6 +29,7 @@ public class Level {
 	private final ArrayList<Cat> cats = new ArrayList<>();
 	private final ArrayList<Net> nets = new ArrayList<>();
 	private final ArrayList<Barrel> barrels = new ArrayList<>();
+	private Bomb bomb = null;
 	
 	private static final int velocityIterations = 6;
 	private static final int positionIterations = 2;
@@ -50,7 +52,8 @@ public class Level {
 	}
 	
 	public void play() {
-		gameUI.render(context, cats, walls, nets, barrels);
+		bomb = Bomb.create(world, 15.0f, 15.0f, 2);
+		gameUI.render(context, cats, walls, nets, barrels, bomb);
 		
 		boolean isStarted = false;
 		
@@ -78,7 +81,7 @@ public class Level {
 		for(;;) {
 			world.step(timeStep, velocityIterations, positionIterations);
 			world.clearForces();
-			gameUI.render(context, cats, walls, nets, barrels);
+			gameUI.render(context, cats, walls, nets, barrels, bomb);
 			
 			if(nbIterations % 25 == 0) {
 				for(Barrel barrel : barrels) {

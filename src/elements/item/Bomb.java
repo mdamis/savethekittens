@@ -13,9 +13,10 @@ public class Bomb {
 	public static final String USER_DATA = "Bomb";
 	public static final int BIT_BOMB = 32;
 	public static final float RADIUS = 1.0f;
-	public static final float RANGE = 3.0f;
+	public static final float RANGE = 5.0f;
 	private final Body body;
 	private final int seconds;
+	private boolean hasExploded = false;
 
 	private Bomb(Body body, int seconds) {
 		this.body = body;
@@ -45,6 +46,14 @@ public class Bomb {
 	
 	public Body getBody() {
 		return body;
+	}
+	
+	public boolean hasExploded() {
+		return hasExploded;
+	}
+	
+	public boolean isActive() {
+		return body.isActive();
 	}
 	
 	@Override
