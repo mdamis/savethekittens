@@ -1,6 +1,8 @@
 package gui;
 
 import java.awt.Color;
+import java.awt.Font;
+import java.awt.FontMetrics;
 import java.awt.Graphics2D;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
@@ -157,5 +159,55 @@ public class GameUI {
 					SCALE * 2 * Net.HEIGHT
 			));
 		}
+	}
+
+	public void victory(ApplicationContext context) {
+		context.renderFrame((graphics, contentLost) -> {
+			if (contentLost) {
+				graphics.setColor(Color.BLACK);
+				graphics.fill(new Rectangle2D.Float(0, 0, width, height));
+			}
+			
+			gui.setColor(Color.BLACK);
+			gui.fill(new Rectangle2D.Float(0, 0, width, height));
+		
+			gui.setColor(Color.MAGENTA);
+			Font font = new Font("Helvetica Neue", Font.BOLD, 50);
+			gui.setFont(font);
+			FontMetrics fm   = gui.getFontMetrics(font);
+			String message = "LEVEL COMPLETE";
+			Rectangle2D rect = fm.getStringBounds(message, gui);
+			float textHeight = (float) rect.getHeight(); 
+			float textWidth = (float) rect.getWidth();
+			float x = (width - textWidth) / 2;
+			float y = (height - textHeight) / 2 + fm.getAscent();
+			gui.drawString(message, x, y);
+			graphics.drawImage(bufferedImage, null, 0, 0);
+		});
+	}
+
+	public void gameOver(ApplicationContext context) {
+		context.renderFrame((graphics, contentLost) -> {
+			if (contentLost) {
+				graphics.setColor(Color.BLACK);
+				graphics.fill(new Rectangle2D.Float(0, 0, width, height));
+			}
+			
+			gui.setColor(Color.MAGENTA);
+			gui.fill(new Rectangle2D.Float(0, 0, width, height));
+		
+			gui.setColor(Color.BLACK);
+			Font font = new Font("Helvetica Neue", Font.BOLD, 50);
+			gui.setFont(font);
+			FontMetrics fm   = gui.getFontMetrics(font);
+			String message = "GAME OVER";
+			Rectangle2D rect = fm.getStringBounds(message, gui);
+			float textHeight = (float) rect.getHeight(); 
+			float textWidth = (float) rect.getWidth();
+			float x = (width - textWidth) / 2;
+			float y = (height - textHeight) / 2 + fm.getAscent();
+			gui.drawString(message, x, y);
+			graphics.drawImage(bufferedImage, null, 0, 0);
+		});
 	}
 }

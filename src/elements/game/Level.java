@@ -61,13 +61,38 @@ public class Level {
 				}
 			}
 			
-			for(Cat cat : cats) {
-				if(!cat.isAlive()) {
-					return;
-				}
+			if(isComplete()) {
+				System.out.println("Victory");
+				gameUI.victory(context);
+				return;
 			}
+			
+			if(isLost()) {
+				System.out.println("Game Over");
+				gameUI.gameOver(context);
+				return;
+			}
+			
 			nbIterations++;
 		}
+	}
+	
+	private boolean isComplete() {
+		for(Net net : nets) {
+			if(!net.isFull()) {
+				return false;
+			}
+		}
+		return true;
+	}
+	
+	private boolean isLost() {
+		for(Cat cat : cats) {
+			if(!cat.isAlive()) {
+				return true;
+			}
+		}
+		return false;
 	}
 	
 	public void createLevelNet(float x, float y) {
