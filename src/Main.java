@@ -18,17 +18,19 @@ public class Main {
 			System.out.println("size of the screen (" + width + " x " + height + ")");
 
 			Menu menu = Menu.createMenu(width, height);
-			menu.render(context);
 			
-			Level level = null;;
-			
-			try {
-				level = Parser.parseLevel("levels/level1.txt", context, width, height);
-			} catch (IOException e) {
-				e.printStackTrace();
+			for(;;) {
+				menu.menuSelection(context);
+				
+				Level level = null;;
+				
+				try {
+					level = Parser.parseLevel("levels/level1.txt", context, width, height);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				level.update();	
 			}
-			level.update();
-
 			
 		});
 	}
