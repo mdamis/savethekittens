@@ -15,6 +15,8 @@ import elements.barrel.Barrel;
 import elements.cat.Cat;
 import elements.game.Level;
 import fr.umlv.zen4.ApplicationContext;
+import fr.umlv.zen4.MotionEvent;
+import fr.umlv.zen4.MotionEvent.Action;
 
 public class GameUI {
 	private static final float SCALE = 12.0f; // pixel per meter
@@ -162,45 +164,27 @@ public class GameUI {
 	}
 
 	public void victory(ApplicationContext context) {
-		context.renderFrame((graphics, contentLost) -> {
-			if (contentLost) {
-				graphics.setColor(Color.BLACK);
-				graphics.fill(new Rectangle2D.Float(0, 0, width, height));
-			}
-			
-			gui.setColor(Color.BLACK);
-			gui.fill(new Rectangle2D.Float(0, 0, width, height));
-		
-			gui.setColor(Color.MAGENTA);
-			Font font = new Font("Helvetica Neue", Font.BOLD, 50);
-			gui.setFont(font);
-			FontMetrics fm   = gui.getFontMetrics(font);
-			String message = "LEVEL COMPLETE";
-			Rectangle2D rect = fm.getStringBounds(message, gui);
-			float textHeight = (float) rect.getHeight(); 
-			float textWidth = (float) rect.getWidth();
-			float x = (width - textWidth) / 2;
-			float y = (height - textHeight) / 2 + fm.getAscent();
-			gui.drawString(message, x, y);
-			graphics.drawImage(bufferedImage, null, 0, 0);
-		});
+		endLevelMessage(context, "LEVEL COMPLETE", Color.BLACK, Color.MAGENTA);
 	}
 
 	public void gameOver(ApplicationContext context) {
+		endLevelMessage(context, "GAME OVER", Color.MAGENTA, Color.BLACK);
+	}
+	
+	private void endLevelMessage(ApplicationContext context, String message, Color backgroundColor, Color textColor) {
 		context.renderFrame((graphics, contentLost) -> {
 			if (contentLost) {
 				graphics.setColor(Color.BLACK);
 				graphics.fill(new Rectangle2D.Float(0, 0, width, height));
 			}
 			
-			gui.setColor(Color.MAGENTA);
+			gui.setColor(backgroundColor);
 			gui.fill(new Rectangle2D.Float(0, 0, width, height));
 		
-			gui.setColor(Color.BLACK);
+			gui.setColor(textColor);
 			Font font = new Font("Helvetica Neue", Font.BOLD, 50);
 			gui.setFont(font);
 			FontMetrics fm   = gui.getFontMetrics(font);
-			String message = "GAME OVER";
 			Rectangle2D rect = fm.getStringBounds(message, gui);
 			float textHeight = (float) rect.getHeight(); 
 			float textWidth = (float) rect.getWidth();
@@ -209,5 +193,15 @@ public class GameUI {
 			gui.drawString(message, x, y);
 			graphics.drawImage(bufferedImage, null, 0, 0);
 		});
+		
+		MotionEvent event;
+		do {
+			try {
+				event = context.waitAndBlockUntilAMotion();
+			} catch (InterruptedException e) {
+				throw new AssertionError(e);
+			}
+		} while(event.getAction() != Action.UP);
+		
 	}
 }

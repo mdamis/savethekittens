@@ -147,7 +147,7 @@ public class Menu {
 			float windowSize = Math.max(width, height);
 			int speed = 25;
 			
-			for(float i=0; i<2*windowSize; i+=speed) {
+			for(float i=0; i<(3.0f/2.0f)*windowSize; i+=speed) {
 				
 				float ellipseWidth = i;
 				
