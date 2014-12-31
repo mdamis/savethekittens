@@ -20,6 +20,13 @@ public class Wall {
 		this.body = body;
 	}
 	
+	/**
+	 * Creates a Wall.
+	 * @param world jbox2d world in which the Wall exists.
+	 * @param x x coordinate of the Wall.
+	 * @param y y coordinate of the Wall.
+	 * @return the new Wall.
+	 */
 	public static Wall createWall(World world, float x, float y) {
 		BodyDef bodyDef = new BodyDef();
 		bodyDef.position.set(x, y);
@@ -41,6 +48,10 @@ public class Wall {
 		body.createFixture(fixtureDef).setUserData(USER_DATA);
 	}
 	
+	/**
+	 * Returns body.
+	 * @return the body of a Wall.
+	 */
 	public Body getBody() {
 		return body;
 	}

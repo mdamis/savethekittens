@@ -25,6 +25,14 @@ public class Bomb {
 		this.seconds = seconds;
 	}
 	
+	/**
+	 * Creates a Bomb.
+	 * @param world jbox2d world in which the Bomb exists.
+	 * @param x x coordinate of the Bomb.
+	 * @param y y coordinate of the Bomb.
+	 * @param seconds seconds before explosion.
+	 * @return
+	 */
 	public static Bomb create(World world, float x, float y, int seconds) {
 		BodyDef bodyDef = new BodyDef();
 		bodyDef.position.set(x, y);
@@ -47,10 +55,19 @@ public class Bomb {
 		body.createFixture(fixtureDef).setUserData(USER_DATA);
 	}
 	
+	/**
+	 * Returns body.
+	 * @return the body of a Bomb.
+	 */
 	public Body getBody() {
 		return body;
 	}
 	
+	/**
+	 * Makes the bomb explode if gameSeconds > seconds.
+	 * Sets the body of the Bomb to active for 5 turns.
+	 * @param gameSeconds seconds since the start of a level.
+	 */
 	public void explode(int gameSeconds) {
 		if(gameSeconds >= seconds && !hasExploded) {
 			turns++;
@@ -63,25 +80,40 @@ public class Bomb {
 		}
 	}
 	
+	/**
+	 * Returns true if the Bomb has exploded.
+	 * @return true if the Bomb has exploded, false otherwise.
+	 */
 	public boolean hasExploded() {
 		return hasExploded;
 	}
 	
+	/**
+	 * Returns true if the Bomb is active.
+	 * @return true if the body of the Bomb is active, false otherwise.
+	 */
 	public boolean isActive() {
 		return body.isActive();
+	}
+	
+	/**
+	 * Returns blastPower.
+	 * @return the blastPower of a Bomb.
+	 */
+	public float getBlastPower() {
+		return blastPower;
+	}
+
+	/**
+	 * Returns seconds.
+	 * @return seconds before explosion.
+	 */
+	public int getSeconds() {
+		return seconds;
 	}
 	
 	@Override
 	public String toString() {
 		return "Bomb : " + body.getPosition().x + " " + body.getPosition().y;
 	}
-
-	public float getBlastPower() {
-		return blastPower;
-	}
-
-	public int getSeconds() {
-		return seconds;
-	}
-	
 }

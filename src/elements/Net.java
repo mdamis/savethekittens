@@ -21,6 +21,13 @@ public class Net {
 		this.body = body;
 	}
 	
+	/**
+	 * Creates a Net.
+	 * @param world jbox2d world in which the Net exists.
+	 * @param x x coordinate of the Net.
+	 * @param y y coordinate of the Net.
+	 * @return the new Net.
+	 */
 	public static Net createNet(World world, float x, float y) {
 		BodyDef bodyDef = new BodyDef();
 		bodyDef.position.set(x, y);
@@ -42,21 +49,31 @@ public class Net {
 		body.createFixture(fixtureDef).setUserData(USER_DATA);
 	}
 	
+	/**
+	 * Returns true if the Net is full.
+	 * @return true if the Net contains a Cat, false otherwise.
+	 */
 	public boolean isFull() {
 		return isFull;
 	}
 	
+	/**
+	 * Returns body.
+	 * @return the body of a Net.
+	 */
 	public Body getBody() {
 		return body;
+	}
+	
+	/**
+	 * Sets the value of isFull to true.
+	 */
+	public void setFull() {
+		this.isFull = true;
 	}
 	
 	@Override
 	public String toString() {
 		return "Net : " + body.getPosition().x + " " + body.getPosition().y;
 	}
-
-	public void setFull() {
-		this.isFull = true;
-	}
-	
 }
