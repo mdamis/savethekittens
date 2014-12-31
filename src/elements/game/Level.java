@@ -43,6 +43,14 @@ public class Level {
 		this.nbBombs = nbBombs;
 	}
 	
+	/**
+	 * Creates a Level.
+	 * @param context current context.
+	 * @param width width of the current window.
+	 * @param height height of the current window.
+	 * @param nbBombs number of Bombs for this Level. (0 or 1)
+	 * @return the new Level.
+	 */
 	public static Level createLevel(ApplicationContext context, float width, float height, int nbBombs) {
 		Level level = new Level(context, width, height, nbBombs);
 		level.setWorldCollisions();
@@ -53,6 +61,12 @@ public class Level {
 		world.setContactListener(new Collisions());
 	}
 	
+	/**
+	 * Plays the level :
+	 * Wait for the player to plant or not a bomb.
+	 * Wait for the player to click on the start button.
+	 * Updates the elements of the world and renders the gameUI.
+	 */
 	public void play() {
 		
 		boolean isStarted = false;
@@ -170,30 +184,62 @@ public class Level {
 		return false;
 	}
 	
+	/**
+	 * Creates a Net and adds it to the list of Net.
+	 * @param x x coordinate of the Net.
+	 * @param y y coordinate of the Net.
+	 */
 	public void createLevelNet(float x, float y) {
 		nets.add(Net.createNet(world, x, y));
 	}
 	
+	/**
+	 * Creates a SingleBarrel and adds it to the list of Barrel.
+	 * @param x x coordinate of the SingleBarrel.
+	 * @param y y coordinate of the SingleBarrel.
+	 * @param angleString string corresponding to a valid angle.
+	 * @return the new Barrel.
+	 */
 	public SingleBarrel createLevelSingleBarrel(float x, float y, String angleString) {
 		SingleBarrel barrel = SingleBarrel.create(world, x, y, angleString);
 		barrels.add(barrel);
 		return barrel;
 	}
 	
+	/**
+	 * Creates an AutomaticBarrel and adds it to the list of Barrel.
+	 * @param x x coordinate of the AutomaticBarrel.
+	 * @param y y coordinate of the AutomaticBarrel.
+	 * @param angleString string corresponding to a valid angle.
+	 * @return the new AutomaticBarrel.
+	 */
 	public AutomaticBarrel createLevelAutomaticBarrel(float x, float y, String angleString) {
 		AutomaticBarrel barrel = AutomaticBarrel.create(world, x, y, angleString);
 		barrels.add(barrel);
 		return barrel;
 	}
 	
+	/**
+	 * Creates a Cat and adds it to the list of Cat.
+	 * @param barrel barrel which will launch the Cat.
+	 * @param catType string corresponding to a valid Cat type.
+	 */
 	public void addCatBarrel(Barrel barrel, String catType) {
 		cats.add(barrel.addCat(world, catType));
 	}
 	
+	/**
+	 * Creates a Wall and adds it to the list of Wall.
+	 * @param x x coordinate of the Wall.
+	 * @param y y coordinate of the Wall.
+	 */
 	public void createLevelWall(float x, float y) {
 		walls.add(Wall.createWall(world, x, y));
 	}
 	
+	/**
+	 * Creates the borders of a Level by adding Walls around it.
+	 */
 	public void createLevelBorders() {
 		
 		//Bottom border

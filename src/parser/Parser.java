@@ -16,6 +16,15 @@ public class Parser {
 	public static final int SPLITS_BARREL = 6;
 	public static final int SPLITS_CAT = 2;
 	
+	/**
+	 * Parses a file describing a level.
+	 * @param levelNumber number of the file to load.
+	 * @param context current context.
+	 * @param width width of the current window.
+	 * @param height height of the current window.
+	 * @return the new Level.
+	 * @throws IOException if the file contains an error.
+	 */
 	public static Level parseLevel(int levelNumber, ApplicationContext context, float width, float height) throws IOException {
 		
 		String path = "levels/level";

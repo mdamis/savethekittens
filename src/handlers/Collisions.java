@@ -53,11 +53,6 @@ public class Collisions implements ContactListener {
 		
 	}
 
-	
-	
-	
-	
-	
 	@Override
 	public void postSolve(Contact contact, ContactImpulse contactImpulse) {
 		// TODO Auto-generated method stub
