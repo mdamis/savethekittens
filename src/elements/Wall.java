@@ -1,5 +1,7 @@
 package elements;
 
+import java.util.Objects;
+
 import org.jbox2d.collision.shapes.PolygonShape;
 import org.jbox2d.dynamics.Body;
 import org.jbox2d.dynamics.BodyDef;
@@ -17,7 +19,7 @@ public class Wall {
 	private final Body body;
 	
 	private Wall(Body body) {
-		this.body = body;
+		this.body = Objects.requireNonNull(body);
 	}
 	
 	/**

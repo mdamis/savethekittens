@@ -1,5 +1,7 @@
 package elements.item;
 
+import java.util.Objects;
+
 import org.jbox2d.collision.shapes.CircleShape;
 import org.jbox2d.dynamics.Body;
 import org.jbox2d.dynamics.BodyDef;
@@ -21,8 +23,8 @@ public class Bomb {
 	private boolean hasExploded = false;
 
 	private Bomb(Body body, int seconds) {
-		this.body = body;
-		this.seconds = seconds;
+		this.body = Objects.requireNonNull(body);
+		this.seconds = Objects.requireNonNull(seconds);
 	}
 	
 	/**

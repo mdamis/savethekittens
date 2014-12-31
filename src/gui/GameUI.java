@@ -8,6 +8,7 @@ import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.Objects;
 
 import org.jbox2d.common.Vec2;
 
@@ -38,10 +39,10 @@ public class GameUI {
 	private final Graphics2D gui;
 	
 	private GameUI(float width, float height) {
-		this.width = width;
-		this.height = height;
-		this.bufferedImage = new BufferedImage((int)width, (int)height, BufferedImage.TYPE_INT_RGB);
-		this.gui = bufferedImage.createGraphics();
+		this.width = Objects.requireNonNull(width);
+		this.height = Objects.requireNonNull(height);
+		this.bufferedImage = Objects.requireNonNull(new BufferedImage((int)width, (int)height, BufferedImage.TYPE_INT_RGB));
+		this.gui = Objects.requireNonNull(bufferedImage.createGraphics());
 	}
 	
 	private void initializeGameUIConstants() {

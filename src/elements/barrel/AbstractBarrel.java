@@ -1,5 +1,7 @@
 package elements.barrel;
 
+import java.util.Objects;
+
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.Body;
 import org.jbox2d.dynamics.World;
@@ -14,8 +16,8 @@ public abstract class AbstractBarrel implements Barrel {
 	private final Vec2 angle;
 	
 	protected AbstractBarrel(Body body, Vec2 angle) {
-		this.body = body;
-		this.angle = angle;
+		this.body = Objects.requireNonNull(body);
+		this.angle = Objects.requireNonNull(angle);
 	}
 	
 	protected static Vec2 parseAngle(String angleString) {

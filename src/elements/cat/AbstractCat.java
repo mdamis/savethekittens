@@ -1,5 +1,7 @@
 package elements.cat;
 
+import java.util.Objects;
+
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.Body;
 
@@ -16,8 +18,8 @@ public abstract class AbstractCat implements Cat{
 	private int nbLives;
 	
 	protected AbstractCat(Body body, int nbLives) {
-		this.body = body;
-		this.nbLives = nbLives;
+		this.body = Objects.requireNonNull(body);
+		this.nbLives = Objects.requireNonNull(nbLives);
 	}
 	
 	protected void kill() {

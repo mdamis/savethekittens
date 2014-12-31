@@ -1,5 +1,7 @@
 package elements;
 
+import java.util.Objects;
+
 import org.jbox2d.collision.shapes.PolygonShape;
 import org.jbox2d.dynamics.Body;
 import org.jbox2d.dynamics.BodyDef;
@@ -18,7 +20,7 @@ public class Net {
 	private boolean isFull = false;
 	
 	private Net(Body body) {
-		this.body = body;
+		this.body = Objects.requireNonNull(body);
 	}
 	
 	/**

@@ -6,6 +6,7 @@ import java.awt.FontMetrics;
 import java.awt.Graphics2D;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
+import java.util.Objects;
 
 import fr.umlv.zen4.ApplicationContext;
 import fr.umlv.zen4.MotionEvent;
@@ -23,8 +24,8 @@ public class Menu {
 	public static float kHeightEighth;
 
 	private Menu(float width, float height) {
-		this.width = width;
-		this.height = height;
+		this.width = Objects.requireNonNull(width);
+		this.height = Objects.requireNonNull(height);
 	}
 
 	private void initializeMenuConstants() {

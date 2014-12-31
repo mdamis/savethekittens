@@ -14,6 +14,7 @@ import gui.GameUI;
 import handlers.Collisions;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.World;
@@ -38,9 +39,9 @@ public class Level {
 	private int nbIterations = 0;
 	
 	private Level(ApplicationContext context, float width, float height, int nbBombs) {
-		this.context = context;
+		this.context = Objects.requireNonNull(context);
 		this.gameUI = GameUI.createGameUI(width, height);
-		this.nbBombs = nbBombs;
+		this.nbBombs = Objects.requireNonNull(nbBombs);
 	}
 	
 	/**
