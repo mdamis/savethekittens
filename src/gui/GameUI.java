@@ -30,6 +30,7 @@ public class GameUI {
 	
 	private static float kWidthBorder;
 	private static float kHeightBorder;
+	private static float kWidthButton;
 	
 	private final float width;
 	private final float height;
@@ -46,6 +47,7 @@ public class GameUI {
 	private void initializeGameUIConstants() {
 		kWidthBorder = (width - WIDTH) / 2;
 		kHeightBorder = (height - HEIGHT) / 2;
+		kWidthButton = WIDTH / 3;
 	}
 	
 	public static GameUI createGameUI(float width, float height) {
@@ -56,7 +58,7 @@ public class GameUI {
 	
 	public void render(ApplicationContext context, ArrayList<Cat> cats, 
 			ArrayList<Wall> walls, ArrayList<Net> nets, ArrayList<Barrel> barrels,
-			Bomb bomb) {
+			Bomb bomb, int seconds) {
 		context.renderFrame((graphics, contentLost) -> {
 			if (contentLost) {
 				graphics.setColor(Color.BLACK);
@@ -66,6 +68,9 @@ public class GameUI {
 			cleanScreen();
 			renderBackground();
 			renderText("START", kWidthBorder, height - kHeightBorder, WIDTH, kHeightBorder);
+			if(seconds >= 1) {
+				renderSecondsButton(seconds);
+			}
 			renderWalls(walls);
 			renderNets(nets);
 			renderBarrels(barrels);
@@ -86,6 +91,12 @@ public class GameUI {
 		
 		gui.setColor(BACKGROUND_COLOR);
 		gui.fill(new Rectangle2D.Float(kWidthBorder, kHeightBorder, WIDTH, HEIGHT));
+	}
+	
+	public void renderSecondsButton(int seconds) {
+		renderText("-", kWidthBorder, 0, kWidthButton, kHeightBorder);
+		renderText(String.valueOf(seconds), kWidthBorder + kWidthButton, 0, kWidthButton, kHeightBorder);
+		renderText("+", kWidthBorder + 2 * kWidthButton, 0, kWidthButton, kHeightBorder);	
 	}
 	
 	private void renderText(String text, float x, float y, float width, float height) {
@@ -275,8 +286,19 @@ public class GameUI {
 		return false;
 	}
 
-	public boolean actionSecondsButtons(float x, float y) {
+	public boolean actionPlusButton(float x, float y) {
+		if((x >+ kWidthBorder + 2 * kWidthButton && x <= width - kWidthBorder) &&
+				(y >= 0 && y <= kHeightBorder)) {
+			return true;
+		}
+		return false;
+	}
 	
+	public boolean actionMinusButton(float x, float y) {
+		if((x >+ kWidthBorder && x <= kWidthBorder + kWidthButton) &&
+				(y >= 0 && y <= kHeightBorder)) {
+			return true;
+		}
 		return false;
 	}
 	

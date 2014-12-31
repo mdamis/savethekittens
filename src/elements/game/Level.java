@@ -63,7 +63,7 @@ public class Level {
 		float y = 0;
 		
 		do {
-			gameUI.render(context, cats, walls, nets, barrels, bomb);
+			gameUI.render(context, cats, walls, nets, barrels, bomb, seconds);
 			if(isPlanted) {
 				gameUI.previewBomb(context, x, y);
 			}
@@ -90,9 +90,13 @@ public class Level {
 						bombPosition = gameUI.convertUIPostionToLevelPosition(x, y);
 						isPlanted = true;
 						gameUI.previewBomb(context, x, y);
-					} else if(gameUI.actionSecondsButtons(event.getX(), event.getY())) {
-						
-					} else {
+					} else if(gameUI.actionPlusButton(event.getX(), event.getY())) {
+						seconds++;
+					} else if(gameUI.actionMinusButton(event.getX(), event.getY())) {
+						if(seconds > 1) {
+							seconds--;
+						}
+					}else {
 						seconds = 1;
 						isPlanted = false;
 					}
@@ -103,7 +107,7 @@ public class Level {
 		
 		if(isPlanted) {
 			bomb = Bomb.create(world, bombPosition.x, bombPosition.y, seconds);
-			gameUI.render(context, cats, walls, nets, barrels, bomb);
+			gameUI.render(context, cats, walls, nets, barrels, bomb, seconds);
 		}
 		
 		update();
@@ -113,7 +117,12 @@ public class Level {
 		for(;;) {
 			world.step(timeStep, velocityIterations, positionIterations);
 			world.clearForces();
-			gameUI.render(context, cats, walls, nets, barrels, bomb);
+			
+			int seconds = 0;
+			if(bomb != null) {
+				seconds = bomb.getSeconds() - nbIterations / 60;
+			}
+			gameUI.render(context, cats, walls, nets, barrels, bomb, seconds);
 			
 			if(nbIterations % 25 == 0) {
 				for(Barrel barrel : barrels) {

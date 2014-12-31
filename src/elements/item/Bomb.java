@@ -79,5 +79,9 @@ public class Bomb {
 	public float getBlastPower() {
 		return blastPower;
 	}
+
+	public int getSeconds() {
+		return seconds;
+	}
 	
 }
