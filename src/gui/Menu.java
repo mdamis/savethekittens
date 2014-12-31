@@ -35,12 +35,23 @@ public class Menu {
 		kHeightEighth = height / 8;
 	}
 	
+	/**
+	 * Creates a Menu.
+	 * @param width width of the current window.
+	 * @param height height of the current window.
+	 * @return the new Menu.
+	 */
 	public static Menu createMenu(float width, float height) {
 		Menu menu = new Menu(width, height);
 		menu.initializeMenuConstants();
 		return menu;
 	}
 	
+	/**
+	 * Renders the main menu and waits for an event.
+	 * @param context current context.
+	 * @return the number of the selected level.
+	 */
 	public int menuSelection(ApplicationContext context) {
 		renderMenu(context);
 		int levelNumber = 1;
@@ -73,6 +84,11 @@ public class Menu {
 		}
 	}
 	
+	/**
+	 * Renders the level selection menu and waits for an event.
+	 * @param context current context.
+	 * @return the number of the selected level.
+	 */
 	public int levelSelection(ApplicationContext context) {
 		int levelNumber = 1;
 		int nbLevels = 10;

@@ -50,12 +50,28 @@ public class GameUI {
 		kWidthButton = WIDTH / 3;
 	}
 	
+	/**
+	 * Creates a GameUI.
+	 * @param width width of the current window.
+	 * @param height height of the current window.
+	 * @return the new GameUI.
+	 */
 	public static GameUI createGameUI(float width, float height) {
 		GameUI gameUI = new GameUI(width, height);
 		gameUI.initializeGameUIConstants();
 		return gameUI;
 	}
 	
+	/**
+	 * Renders the Level.
+	 * @param context current context.
+	 * @param cats cats of the Level.
+	 * @param walls walls of the Level.
+	 * @param nets nets of the Level.
+	 * @param barrels barrels of the Level.
+	 * @param bomb bomb of the Level.
+	 * @param seconds seconds left before explosion.
+	 */
 	public void render(ApplicationContext context, ArrayList<Cat> cats, 
 			ArrayList<Wall> walls, ArrayList<Net> nets, ArrayList<Barrel> barrels,
 			Bomb bomb, int seconds) {
@@ -93,7 +109,7 @@ public class GameUI {
 		gui.fill(new Rectangle2D.Float(kWidthBorder, kHeightBorder, WIDTH, HEIGHT));
 	}
 	
-	public void renderSecondsButton(int seconds) {
+	private void renderSecondsButton(int seconds) {
 		renderText("-", kWidthBorder, 0, kWidthButton, kHeightBorder);
 		renderText(String.valueOf(seconds), kWidthBorder + kWidthButton, 0, kWidthButton, kHeightBorder);
 		renderText("+", kWidthBorder + 2 * kWidthButton, 0, kWidthButton, kHeightBorder);	
@@ -228,10 +244,18 @@ public class GameUI {
 		
 	}
 
+	/**
+	 * Renders the victory screen.
+	 * @param context current context.
+	 */
 	public void victory(ApplicationContext context) {
 		endLevelMessage(context, "LEVEL COMPLETE", Color.BLACK, Color.MAGENTA);
 	}
 
+	/**
+	 * Renders the game over screen.
+	 * @param context current context.
+	 */
 	public void gameOver(ApplicationContext context) {
 		endLevelMessage(context, "GAME OVER", Color.MAGENTA, Color.BLACK);
 	}
@@ -270,6 +294,12 @@ public class GameUI {
 		
 	}
 
+	/**
+	 * Returns true if there is an action on the start button. 
+	 * @param x x coordinate of the event.
+	 * @param y y coordinate of the event.
+	 * @return true if there is an action on the start button, false otherwise.
+	 */
 	public boolean actionStartButton(float x, float y) {
 		if((x >= kWidthBorder && x <= width - kWidthBorder) &&
 				(y >= height - kHeightBorder && y <= height)) {
@@ -278,6 +308,12 @@ public class GameUI {
 		return false;
 	}
 	
+	/**
+	 * Returns true if the coordinates of the event are between the level borders.
+	 * @param x x coordinate of the event.
+	 * @param y y coordinate of the event.
+	 * @return true if the coordinates are between the level borders, false otherwise.
+	 */
 	public boolean isInLevel(float x, float y) {
 		if((x >+ kWidthBorder && x <= width - kWidthBorder) &&
 				(y >= kHeightBorder && y <= height - kHeightBorder)) {
@@ -286,6 +322,12 @@ public class GameUI {
 		return false;
 	}
 
+	/**
+	 * Returns true if there is an action on the plus button.
+	 * @param x x coordinate of the event.
+	 * @param y y coordinate of the event.
+	 * @return true if there is an action on the plus button, false otherwise.
+	 */
 	public boolean actionPlusButton(float x, float y) {
 		if((x >+ kWidthBorder + 2 * kWidthButton && x <= width - kWidthBorder) &&
 				(y >= 0 && y <= kHeightBorder)) {
@@ -294,6 +336,12 @@ public class GameUI {
 		return false;
 	}
 	
+	/**
+	 * Returns true if there is an action on the minus button.
+	 * @param x x coordinate of the event.
+	 * @param y y coordinate of the event.
+	 * @return true if there is an action on the minus button, false otherwise.
+	 */
 	public boolean actionMinusButton(float x, float y) {
 		if((x >+ kWidthBorder && x <= kWidthBorder + kWidthButton) &&
 				(y >= 0 && y <= kHeightBorder)) {
@@ -302,12 +350,24 @@ public class GameUI {
 		return false;
 	}
 	
+	/**
+	 * Converts the coordinates in the window to coordinates in the level.
+	 * @param x x coordinate in the window.
+	 * @param y y coordinate in the window.
+	 * @return a Vec2 of the new coordinates.
+	 */
 	public Vec2 convertUIPostionToLevelPosition(float x, float y) {
 		float newX = (x - kWidthBorder) / SCALE;
 		float newY = (height - y - kHeightBorder) / SCALE;
 		return new Vec2(newX, newY);
 	}
 	
+	/**
+	 * Renders a preview of the Bomb.
+	 * @param context current context.
+	 * @param x x coordinate of the Bomb.
+	 * @param y y coordinate of the Bomb.
+	 */
 	public void previewBomb(ApplicationContext context, float x, float y) {
 		context.renderFrame((graphics, contentLost) -> {
 			if (contentLost) {
