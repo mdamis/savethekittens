@@ -130,13 +130,18 @@ public class Level {
 	}
 	
 	private boolean update() {
+		long start = System.nanoTime();
+		
 		for(;;) {
 			world.step(timeStep, velocityIterations, positionIterations);
 			world.clearForces();
 			
-			int seconds = 0;
+			long now = (System.nanoTime() - start) / 1_000_000_000;
+			long seconds = 0;
+			
 			if(bomb != null) {
-				seconds = bomb.getSeconds() - nbIterations / 60;
+				bomb.explode(now);
+				seconds = bomb.getSeconds() - now;
 			}
 			gameUI.render(context, cats, walls, nets, barrels, bomb, seconds);
 			
@@ -146,10 +151,6 @@ public class Level {
 						barrel.shootCat();
 					}
 				}
-			}
-			
-			if(bomb != null) {
-				bomb.explode(nbIterations / 60);
 			}
 		
 			if(isComplete()) {

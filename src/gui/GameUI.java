@@ -75,7 +75,7 @@ public class GameUI {
 	 */
 	public void render(ApplicationContext context, ArrayList<Cat> cats, 
 			ArrayList<Wall> walls, ArrayList<Net> nets, ArrayList<Barrel> barrels,
-			Bomb bomb, int seconds) {
+			Bomb bomb, long seconds) {
 		context.renderFrame((graphics, contentLost) -> {
 			if (contentLost) {
 				graphics.setColor(Color.BLACK);
@@ -110,7 +110,7 @@ public class GameUI {
 		gui.fill(new Rectangle2D.Float(kWidthBorder, kHeightBorder, WIDTH, HEIGHT));
 	}
 	
-	private void renderSecondsButton(int seconds) {
+	private void renderSecondsButton(long seconds) {
 		renderText("-", kWidthBorder, 0, kWidthButton, kHeightBorder);
 		renderText(String.valueOf(seconds), kWidthBorder + kWidthButton, 0, kWidthButton, kHeightBorder);
 		renderText("+", kWidthBorder + 2 * kWidthButton, 0, kWidthButton, kHeightBorder);	

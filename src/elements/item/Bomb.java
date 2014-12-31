@@ -70,7 +70,7 @@ public class Bomb {
 	 * Sets the body of the Bomb to active for 5 turns.
 	 * @param gameSeconds seconds since the start of a level.
 	 */
-	public void explode(int gameSeconds) {
+	public void explode(long gameSeconds) {
 		if(gameSeconds >= seconds && !hasExploded) {
 			turns++;
 			if(turns == 1) {
