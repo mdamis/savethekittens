@@ -23,12 +23,14 @@ public class Main {
 				int levelNumber = menu.menuSelection(context);
 				Level level = null;;
 				
-				try {
-					level = Parser.parseLevel(levelNumber, context, width, height);
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-				level.play();	
+				do {
+					try {
+						level = Parser.parseLevel(levelNumber, context, width, height);
+					} catch (IOException e) {
+						e.printStackTrace();
+					}		
+				} while(level.play());
+				
 			}
 			
 		});

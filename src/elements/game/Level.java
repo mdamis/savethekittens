@@ -67,8 +67,9 @@ public class Level {
 	 * Wait for the player to plant or not a bomb.
 	 * Wait for the player to click on the start button.
 	 * Updates the elements of the world and renders the gameUI.
+	 * @return true if RETRY pressed, false if QUIT pressed.
 	 */
-	public void play() {
+	public boolean play() {
 		
 		boolean isStarted = false;
 		boolean isPlanted = false;
@@ -125,10 +126,10 @@ public class Level {
 			gameUI.render(context, cats, walls, nets, barrels, bomb, seconds);
 		}
 		
-		update();
+		return update();
 	}
 	
-	private void update() {
+	private boolean update() {
 		for(;;) {
 			world.step(timeStep, velocityIterations, positionIterations);
 			world.clearForces();
@@ -154,13 +155,12 @@ public class Level {
 			if(isComplete()) {
 				System.out.println("Victory");
 				gameUI.victory(context);
-				return;
+				return false;
 			}
 			
 			if(isLost()) {
 				System.out.println("Game Over");
-				gameUI.gameOver(context);
-				return;
+				return gameUI.gameOver(context);
 			}
 			
 			nbIterations++;

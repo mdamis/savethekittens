@@ -250,18 +250,50 @@ public class GameUI {
 	 * @param context current context.
 	 */
 	public void victory(ApplicationContext context) {
-		endLevelMessage(context, "LEVEL COMPLETE", Color.BLACK, Color.MAGENTA);
+		endLevelMessage(context, "LEVEL COMPLETE", Color.BLACK, Color.MAGENTA, 0, 0, width, height);
+		
+		MotionEvent event;
+		do {
+			try {
+				event = context.waitAndBlockUntilAMotion();
+			} catch (InterruptedException e) {
+				throw new AssertionError(e);
+			}
+		} while(event.getAction() != Action.UP);
 	}
 
 	/**
-	 * Renders the game over screen.
+	 * Renders the game over screen and waits for an event.
 	 * @param context current context.
+	 * @return true if the action is RETRY, false if the action is QUIT.
 	 */
-	public void gameOver(ApplicationContext context) {
-		endLevelMessage(context, "GAME OVER", Color.MAGENTA, Color.BLACK);
+	public boolean gameOver(ApplicationContext context) {
+		endLevelMessage(context, "GAME OVER", Color.MAGENTA, Color.BLACK, 0, 0, width, height);
+		endLevelMessage(context, "RETRY", Color.MAGENTA, Color.BLACK, kWidthBorder, height - kHeightBorder * 2, kWidthButton, kHeightBorder);
+		endLevelMessage(context, "QUIT", Color.MAGENTA, Color.BLACK, kWidthBorder + 2 * kWidthButton, height - kHeightBorder * 2, kWidthButton, kHeightBorder);
+		
+		for(;;) {
+			MotionEvent event;
+			try {
+				event = context.waitAndBlockUntilAMotion();
+			} catch (InterruptedException e) {
+				throw new AssertionError(e);
+			}
+			if(event.getAction() == Action.UP &&
+					(event.getX() > kWidthBorder && event.getX() < kWidthBorder + kWidthButton) &&
+					(event.getY() > height - 2 *kHeightBorder && event.getY() < height - kHeightBorder)) {
+				return true;
+			}
+			
+			if(event.getAction() == Action.UP &&
+					(event.getX() > kWidthBorder + 2 * kWidthButton && event.getX() < width - kWidthBorder) &&
+					(event.getY() > height - 2 *kHeightBorder && event.getY() < height - kHeightBorder)) {
+				return false;
+			}
+		}
 	}
 	
-	private void endLevelMessage(ApplicationContext context, String message, Color backgroundColor, Color textColor) {
+	private void endLevelMessage(ApplicationContext context, String message, Color backgroundColor, Color textColor, float x, float y, float width, float height) {
 		context.renderFrame((graphics, contentLost) -> {
 			if (contentLost) {
 				graphics.setColor(Color.BLACK);
@@ -278,21 +310,11 @@ public class GameUI {
 			Rectangle2D rect = fm.getStringBounds(message, gui);
 			float textHeight = (float) rect.getHeight(); 
 			float textWidth = (float) rect.getWidth();
-			float x = (width - textWidth) / 2;
-			float y = (height - textHeight) / 2 + fm.getAscent();
-			gui.drawString(message, x, y);
+			float posX = x + (width - textWidth) / 2;
+			float posY = y + (height - textHeight) / 2 + fm.getAscent();
+			gui.drawString(message, posX, posY);
 			graphics.drawImage(bufferedImage, null, 0, 0);
 		});
-		
-		MotionEvent event;
-		do {
-			try {
-				event = context.waitAndBlockUntilAMotion();
-			} catch (InterruptedException e) {
-				throw new AssertionError(e);
-			}
-		} while(event.getAction() != Action.UP);
-		
 	}
 
 	/**

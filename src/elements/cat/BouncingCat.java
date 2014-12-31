@@ -12,7 +12,7 @@ import elements.Wall;
 import elements.item.Bomb;
 
 public class BouncingCat extends AbstractCat {
-	public static final int NB_LIVES = 3;
+	public static final int NB_LIVES = 4;
 	
 	BouncingCat(Body body) {
 		super(body, NB_LIVES);

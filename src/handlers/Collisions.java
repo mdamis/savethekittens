@@ -42,6 +42,7 @@ public class Collisions implements ContactListener {
 		case Bomb.USER_DATA:
 			Object bomb = bodyA.getUserData();
 			((Cat) cat).contactWithBomb((Bomb) bomb);
+			break;
 		default:
 			break;
 		}	
