@@ -4,6 +4,8 @@ import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.Body;
 
 import elements.Net;
+import elements.Wall;
+import elements.game.Level;
 import elements.item.Bomb;
 
 public abstract class AbstractCat implements Cat{
@@ -81,5 +83,16 @@ public abstract class AbstractCat implements Cat{
 	@Override
 	public String toString() {
 		return nbLives + " lives " + body.getPosition().x + " " + body.getPosition().y;
+	}
+	
+	@Override
+	public boolean isInLevel() {
+		float x = body.getPosition().x;
+		float y = body.getPosition().y;
+		if((x < 2 * Wall.WIDTH || x > Level.WIDTH - 2 * Wall.WIDTH) ||
+				(y < 2 * Wall.HEIGHT || y > Level.HEIGHT - 2 * Wall.HEIGHT)) {
+			return false;
+		}
+		return true;
 	}
 }

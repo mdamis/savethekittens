@@ -17,5 +17,6 @@ public interface Cat {
 	void contactWithNet(Net net);
 	boolean isActive();
 	void contactWithBomb(Bomb bomb);
+	boolean isInLevel();
 	
 }

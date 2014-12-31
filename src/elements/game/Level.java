@@ -163,7 +163,7 @@ public class Level {
 	
 	private boolean isLost() {
 		for(Cat cat : cats) {
-			if(!cat.isAlive()) {
+			if(!cat.isAlive() || !cat.isInLevel()) {
 				return true;
 			}
 		}
