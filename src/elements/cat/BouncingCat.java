@@ -18,6 +18,13 @@ public class BouncingCat extends AbstractCat {
 		super(body, NB_LIVES);
 	}
 
+	/**
+	 * Creates a BouncingCat.
+	 * @param world jbox2d world in which the BouncingCat exists.
+	 * @param x x coordinate of the BouncingCat.
+	 * @param y y coordinate of the BouncingCat.
+	 * @return the new BouncingCat.
+	 */
 	public static BouncingCat create(World world, float x, float y) {
 		BodyDef bodyDef = new BodyDef();
 		bodyDef.position.set(x, y);

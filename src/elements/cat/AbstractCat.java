@@ -81,11 +81,6 @@ public abstract class AbstractCat implements Cat{
 	}
 	
 	@Override
-	public String toString() {
-		return nbLives + " lives " + body.getPosition().x + " " + body.getPosition().y;
-	}
-	
-	@Override
 	public boolean isInLevel() {
 		float x = body.getPosition().x;
 		float y = body.getPosition().y;
@@ -94,5 +89,10 @@ public abstract class AbstractCat implements Cat{
 			return false;
 		}
 		return true;
+	}
+	
+	@Override
+	public String toString() {
+		return nbLives + " lives " + body.getPosition().x + " " + body.getPosition().y;
 	}
 }

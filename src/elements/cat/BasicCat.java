@@ -18,6 +18,13 @@ public class BasicCat extends AbstractCat {
 		super(body, NB_LIVES);
 	}
 
+	/**
+	 * Creates a BasicCat.
+	 * @param world jbox2d world in which the BasicCat exists.
+	 * @param x x coordinate of the BasicCat.
+	 * @param y y coordinate of the BasicCat.
+	 * @return the new BasicCat.
+	 */
 	public static BasicCat create(World world, float x, float y) {
 		BodyDef bodyDef = new BodyDef();
 		bodyDef.position.set(x, y);
