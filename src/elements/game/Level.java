@@ -30,19 +30,21 @@ public class Level {
 	private final ArrayList<Net> nets = new ArrayList<>();
 	private final ArrayList<Barrel> barrels = new ArrayList<>();
 	private Bomb bomb = null;
+	private final int nbBombs;
 	
 	private static final int velocityIterations = 6;
 	private static final int positionIterations = 2;
 	private static final float timeStep = 1.0f / 60.0f;
 	private int nbIterations = 0;
 	
-	private Level(ApplicationContext context, float width, float height) {
+	private Level(ApplicationContext context, float width, float height, int nbBombs) {
 		this.context = context;
 		this.gameUI = GameUI.createGameUI(width, height);
+		this.nbBombs = nbBombs;
 	}
 	
-	public static Level createLevel(ApplicationContext context, float width, float height) {
-		Level level = new Level(context, width, height);
+	public static Level createLevel(ApplicationContext context, float width, float height, int nbBombs) {
+		Level level = new Level(context, width, height, nbBombs);
 		level.setWorldCollisions();
 		return level;
 	}
@@ -52,12 +54,19 @@ public class Level {
 	}
 	
 	public void play() {
-		bomb = Bomb.create(world, 26.0f, 23.0f, 1);
-		gameUI.render(context, cats, walls, nets, barrels, bomb);
 		
 		boolean isStarted = false;
+		boolean isPlanted = false;
+		int seconds = 1;
+		Vec2 bombPosition = new Vec2();
+		float x = 0;
+		float y = 0;
 		
 		do {
+			gameUI.render(context, cats, walls, nets, barrels, bomb);
+			if(isPlanted) {
+				gameUI.previewBomb(context, x, y);
+			}
 			
 			MotionEvent event;
 			try {
@@ -67,12 +76,35 @@ public class Level {
 			}
 			
 			if(event.getAction() == Action.UP) {
+				
 				if(gameUI.actionStartButton(event.getX(), event.getY())) {
 					isStarted = true;
+					continue;
+				}
+				
+				if(nbBombs == 1) {
+					if(gameUI.isInLevel(event.getX(), event.getY())) {
+						x = event.getX();
+						y = event.getY();
+						
+						bombPosition = gameUI.convertUIPostionToLevelPosition(x, y);
+						isPlanted = true;
+						gameUI.previewBomb(context, x, y);
+					} else if(gameUI.actionSecondsButtons(event.getX(), event.getY())) {
+						
+					} else {
+						seconds = 1;
+						isPlanted = false;
+					}
 				}
 			}
 			
 		} while(!isStarted);
+		
+		if(isPlanted) {
+			bomb = Bomb.create(world, bombPosition.x, bombPosition.y, seconds);
+			gameUI.render(context, cats, walls, nets, barrels, bomb);
+		}
 		
 		update();
 	}
@@ -91,8 +123,10 @@ public class Level {
 				}
 			}
 			
-			bomb.explode(nbIterations / 60);
-			
+			if(bomb != null) {
+				bomb.explode(nbIterations / 60);
+			}
+		
 			if(isComplete()) {
 				System.out.println("Victory");
 				gameUI.victory(context);

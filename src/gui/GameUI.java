@@ -9,6 +9,8 @@ import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
+import org.jbox2d.common.Vec2;
+
 import elements.Net;
 import elements.Wall;
 import elements.barrel.Barrel;
@@ -182,6 +184,11 @@ public class GameUI {
 	}
 	
 	private void renderBomb(Bomb bomb) {
+		
+		if(bomb == null) {
+			return;
+		}
+		
 		float x = bomb.getBody().getPosition().x;
 		float y = bomb.getBody().getPosition().y;
 		
@@ -258,5 +265,51 @@ public class GameUI {
 			return true;
 		}
 		return false;
+	}
+	
+	public boolean isInLevel(float x, float y) {
+		if((x >+ kWidthBorder && x <= width - kWidthBorder) &&
+				(y >= kHeightBorder && y <= height - kHeightBorder)) {
+			return true;
+		}
+		return false;
+	}
+
+	public boolean actionSecondsButtons(float x, float y) {
+	
+		return false;
+	}
+	
+	public Vec2 convertUIPostionToLevelPosition(float x, float y) {
+		float newX = (x - kWidthBorder) / SCALE;
+		float newY = (height - y - kHeightBorder) / SCALE;
+		return new Vec2(newX, newY);
+	}
+	
+	public void previewBomb(ApplicationContext context, float x, float y) {
+		context.renderFrame((graphics, contentLost) -> {
+			if (contentLost) {
+				graphics.setColor(Color.BLACK);
+				graphics.fill(new Rectangle2D.Float(0, 0, width, height));
+			}
+			float scale = Bomb.RADIUS * SCALE;
+	
+			gui.setColor(new Color(255, 50, 50));
+			gui.fill(new Ellipse2D.Float(
+				x - Bomb.RANGE * SCALE,
+				y - Bomb.RANGE * SCALE,
+				Bomb.RANGE * 2 * SCALE,
+				Bomb.RANGE * 2 * SCALE
+			));
+				
+			gui.setColor(Color.BLACK);
+			gui.fill(new Ellipse2D.Float(
+				x - scale,
+				y - scale,
+				scale * 2,
+				scale * 2
+			));
+			graphics.drawImage(bufferedImage, null, 0, 0);
+		});
 	}
 }

@@ -21,8 +21,7 @@ public class Parser {
 		String path = "levels/level";
 		path += String.valueOf(levelNumber) + ".txt";
 		
-		Level level = Level.createLevel(context, width, height);
-		level.createLevelBorders();
+		Level level;
 		
 		try(BufferedReader br = Files.newBufferedReader(Paths.get(path), StandardCharsets.UTF_8)) {
 			
@@ -33,10 +32,18 @@ public class Parser {
 			int nbNets = Integer.parseInt(splits[1]);
 			int nbBarrels = Integer.parseInt(splits[2]);
 			int nbCats = Integer.parseInt(splits[3]);
+			int nbBombs = Integer.parseInt(splits[4]);
 			
 			if(nbNets > nbCats) {
 				throw new IOException("Wrong file format");
 			}
+			
+			if(nbBombs != 1 && nbBombs != 0) {
+				throw new IOException("Wrong file format");
+			}
+			
+			level = Level.createLevel(context, width, height, nbBombs);
+			level.createLevelBorders();
 			
 			for(int i=0; i<nbWalls; i++) {
 				line = br.readLine();
