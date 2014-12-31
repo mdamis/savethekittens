@@ -17,6 +17,14 @@ public class SingleBarrel extends AbstractBarrel {
 		super(body, angle);
 	}
 	
+	/**
+	 * Creates a SingleBarrel.
+	 * @param world jbox2d world in which the SingleBarrel exists.
+	 * @param x x coordinate of the SingleBarrel.
+	 * @param y y coordinate of the SingleBarrel.
+	 * @param angleString string corresponding to a valid angle.
+	 * @return the new SingleBarrel.
+	 */
 	public static SingleBarrel create(World world, float x, float y, String angleString) {
 		BodyDef bodyDef = new BodyDef();
 		bodyDef.position.set(x, y);

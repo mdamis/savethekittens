@@ -21,9 +21,30 @@ public interface Barrel {
 	public static final float HEIGHT = 1.5f;
 	public static final int BIT_BARREL = 8;
 	
+	/**
+	 * Returns body.
+	 * @return the body of a Barrel.
+	 */
 	Body getBody();
+	
+	/**
+	 * Returns true if the Barrel is active.
+	 * @return true if the body of the Barrel is active, false otherwise.
+	 */
 	boolean isActive();
+	
+	/**
+	 * Launches a Cat.
+	 * Calls the method move on a Cat with the Barrel angle. 
+	 */
 	void shootCat();
+	
+	/**
+	 * Adds a Cat to the Barrel.
+	 * @param world jbox2d world in which the Cat exists.
+	 * @param catType type of the Cat.
+	 * @return the new Cat.
+	 */
 	Cat addCat(World world, String catType);
 
 }

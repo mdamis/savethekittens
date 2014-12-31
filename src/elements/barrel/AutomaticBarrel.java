@@ -19,6 +19,14 @@ public class AutomaticBarrel extends AbstractBarrel {
 		super(body, angle);
 	}
 	
+	/**
+	 * Creates an AutomaticBarrel.
+	 * @param world jbox2d world in which the AutomaticBarrel exists.
+	 * @param x x coordinate of the AutomaticBarrel.
+	 * @param y y coordinate of the AutomaticBarrel.
+	 * @param angleString string corresponding to a valid angle.
+	 * @return the new AutomaticBarrel.
+	 */
 	public static AutomaticBarrel create(World world, float x, float y, String angleString) {
 		BodyDef bodyDef = new BodyDef();
 		bodyDef.position.set(x, y);

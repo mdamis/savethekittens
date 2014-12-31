@@ -31,7 +31,7 @@ public class Bomb {
 	 * @param x x coordinate of the Bomb.
 	 * @param y y coordinate of the Bomb.
 	 * @param seconds seconds before explosion.
-	 * @return
+	 * @return the new Bomb.
 	 */
 	public static Bomb create(World world, float x, float y, int seconds) {
 		BodyDef bodyDef = new BodyDef();
