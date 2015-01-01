@@ -1,4 +1,4 @@
-0 1 1 1 1
+0 1 1 1 0
 Net 3.5 3.5
 Barrel Single 1 45.0 45.0 SW
 Cat BouncingCat

@@ -19,18 +19,19 @@ public class Main {
 
 			Menu menu = Menu.createMenu(width, height);
 			
-			for(;;) {
+			Level level = null;;
+				
+			boolean play = true;
+			while(play) {
 				int levelNumber = menu.menuSelection(context);
-				Level level = null;;
 				
-				do {
-					try {
-						level = Parser.parseLevel(levelNumber, context, width, height);
-					} catch (IOException e) {
-						e.printStackTrace();
-					}		
-				} while(level.play());
+				try {
+					level = Parser.parseLevel(levelNumber, context, width, height);
+				} catch (IOException e) {
+					continue;
+				}
 				
+				play = level.play();
 			}
 			
 		});

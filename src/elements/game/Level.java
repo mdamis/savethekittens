@@ -79,7 +79,12 @@ public class Level {
 		float y = 0;
 		
 		do {
-			gameUI.render(context, cats, walls, nets, barrels, bomb, seconds);
+			if(nbBombs == 1) {
+				gameUI.render(context, cats, walls, nets, barrels, bomb, seconds);
+			} else {
+				gameUI.render(context, cats, walls, nets, barrels, bomb, 0);
+			}
+			
 			if(isPlanted) {
 				gameUI.previewBomb(context, x, y);
 			}
