@@ -54,7 +54,7 @@ public class AutomaticBarrel extends AbstractBarrel {
 	@Override
 	public void shootCat() {
 		cats.remove(0).move(getAngle());
-		if(cats.size() <= 0) {
+		if(cats.isEmpty()) {
 			setInactive();
 		}
 	}

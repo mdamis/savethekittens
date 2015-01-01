@@ -82,6 +82,8 @@ public class Parser {
 				level.createLevelNet(x, y);
 			}
 			
+			int nbCatsTotal = 0;
+			
 			for(int i=0; i<nbBarrels; i++) {
 				line = br.readLine();
 				splits = line.split(" ");
@@ -109,6 +111,8 @@ public class Parser {
 					throw new IOException("Wrong file format");
 				}	
 				
+				nbCatsTotal += nbCatsBarrel;
+				
 				for(int j=0; j<nbCatsBarrel; j++) {
 					line = br.readLine();
 					splits = line.split(" ");
@@ -121,6 +125,10 @@ public class Parser {
 					level.addCatBarrel(barrel, catType);
 				}
 				
+			}
+			
+			if(nbCats != nbCatsTotal) {
+				throw new IOException("Wrong file format");
 			}
 			
 		} catch(IOException e) {
