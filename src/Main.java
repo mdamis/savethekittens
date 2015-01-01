@@ -15,23 +15,21 @@ public class Main {
 			ScreenInfo screenInfo = context.getScreenInfo();
 			float width = screenInfo.getWidth();
 			float height = screenInfo.getHeight();
-			System.out.println("size of the screen (" + width + " x " + height + ")");
 
 			Menu menu = Menu.createMenu(width, height);
 			
-			Level level = null;;
-				
-			boolean play = true;
-			while(play) {
+			for(;;) {
 				int levelNumber = menu.menuSelection(context);
+				Level level = null;;
 				
-				try {
-					level = Parser.parseLevel(levelNumber, context, width, height);
-				} catch (IOException e) {
-					continue;
-				}
+				do {
+					try {
+						level = Parser.parseLevel(levelNumber, context, width, height);
+					} catch (IOException e) {
+						break;
+					}		
+				} while(level.play());
 				
-				play = level.play();
 			}
 			
 		});
