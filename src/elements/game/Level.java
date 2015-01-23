@@ -150,6 +150,12 @@ public class Level {
 			}
 			gameUI.render(context, cats, walls, nets, barrels, bomb, seconds);
 			
+			try {
+				Thread.sleep(0, 500);
+			} catch (InterruptedException e) {
+				return false;
+			}
+			
 			if(nbIterations % 25 == 0) {
 				for(Barrel barrel : barrels) {
 					if(barrel.isActive()) {

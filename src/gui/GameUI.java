@@ -15,6 +15,7 @@ import org.jbox2d.common.Vec2;
 import elements.Net;
 import elements.Wall;
 import elements.barrel.Barrel;
+import elements.cat.BouncingCat;
 import elements.cat.Cat;
 import elements.game.Level;
 import elements.item.Bomb;
@@ -137,7 +138,12 @@ public class GameUI {
 				float x = cat.getBody().getPosition().x;
 				float y = cat.getBody().getPosition().y;
 				
-				gui.setColor(Color.MAGENTA);
+				if(cat instanceof BouncingCat) {
+					gui.setColor(Color.MAGENTA);
+				} else {
+					gui.setColor(Color.ORANGE);
+				}
+				
 				gui.fill(new Ellipse2D.Float(
 						kWidthBorder + x * SCALE - SCALE,
 						height - kHeightBorder - y * SCALE - SCALE,
